@@ -4,6 +4,12 @@
 
 [English](README.md) · [Bahasa Indonesia](README.id.md)
 
+[![Download .deb](https://img.shields.io/badge/Download-.deb-2563eb?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.0/larsana_1.2.0_amd64.deb)
+
+[Download .deb — LARSANA 1.2.0](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.0/larsana_1.2.0_amd64.deb)
+
+LARSANA 1.2.0 · amd64 · Ubuntu 24.04 / Linux Mint 22.x / Debian 13
+
 LARSANA is an open-source desktop environment for local PHP development on Ubuntu, Linux Mint, and Debian. Inspired by Laragon's workflow, it brings Apache, stable Nginx, multiple PHP versions, MariaDB, and phpMyAdmin into one `.deb` installer.
 
 LARSANA is independently implemented with its own branding and assets. It is not an official Laragon release and is not affiliated with Laragon or Laravel.
