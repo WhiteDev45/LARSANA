@@ -17,3 +17,6 @@ releases/
 
 # Generated promotional assets
 output/
+
+# Local project documentation
+docs/

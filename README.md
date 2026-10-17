@@ -107,7 +107,7 @@ Running the source GUI alone does not install runtimes or phpMyAdmin. Use the co
 
 Runtime source versions/checksums are pinned in `runtimes/sources.lock.json`; phpMyAdmin is pinned in `runtimes/phpmyadmin.lock.json`. Rootless build tools live in `tools/`. Packaging requires prepared source-built runtimes, the desktop payload, a noble builder, and corresponding dependency sources; `build_unified.py` is not a standalone fresh-checkout build command.
 
-Read the [packaging documentation](docs/UNIFIED_PACKAGE.md), [development plan](docs/PLAN.md), [contribution guide](CONTRIBUTING.md), and [GitHub publishing guide](docs/GITHUB_PUBLISH.md). The GitHub workflow runs Python core checks; it does not build or certify the complete installer.
+Read the [contribution guide](CONTRIBUTING.md) for development expectations. The GitHub workflow runs Python core checks; it does not build or certify the complete installer.
 
 ## License and source availability
 

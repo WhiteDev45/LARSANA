@@ -33,6 +33,5 @@ for name,markers in checks.items():
   raise RuntimeError('Lintian errors remain')
  shutil.copy2(file,out/name)
  summary['checks'][name]={'result':'pass','warnings':sum(line.startswith('W: ') for line in value.splitlines())}
-shutil.copy2(ROOT/'docs/BUILD_REPORT.md',ROOT/'dist/BUILD_REPORT.md')
 (out/'results.json').write_text(json.dumps(summary,indent=2)+'\n')
 print('PASS all local release checks:',summary['target']['suite'])

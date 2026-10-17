@@ -88,7 +88,7 @@ def build():
  shutil.copy2(source_manifest,doc/'compat-source-manifest.json')
  (STAGE/'usr/share/man/man1/larsana.1.gz').write_bytes(gzip.compress((ROOT/'packaging/larsana.1').read_bytes(),mtime=0))
  (doc/'sources.lock.json').write_bytes((ROOT/'runtimes/sources.lock.json').read_bytes())
- for file in ['README.md','docs/PLAN.md','docs/BUILD_REPORT.md','docs/UNIFIED_PACKAGE.md']:
+ for file in ['README.md','README.id.md']:
   shutil.copy2(ROOT/file,doc/Path(file).name)
  # No component package dependency: all components are owned by this one package.
  deps='python3 (>= 3.10), perl, libc6 (>= 2.39), libstdc++6 (>= 13.1), libgcc-s1, libgl1, libegl1, libopengl0, libglib2.0-0t64 | libglib2.0-0, libdbus-1-3, libfontconfig1, libfreetype6, libx11-6, libx11-xcb1, libxcb1, libxcb-cursor0, libxcb-icccm4, libxcb-image0, libxcb-keysyms1, libxcb-render-util0, libxcb-shape0, libxcb-xfixes0, libxcb-xinerama0, libxcb-randr0, libxcb-render0, libxcb-shm0, libxcb-sync1, libxkbcommon0, libxkbcommon-x11-0, libsm6, libice6, zlib1g, libxext6, fonts-dejavu-core'

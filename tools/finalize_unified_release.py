@@ -64,7 +64,6 @@ for suite in ['noble','trixie']:
   if file.is_file():shutil.copy2(file,dest/file.name)
 report={'version':VERSION,'installer':package.name,'sha256':sha(package),'bytes':package.stat().st_size,'targets':['Ubuntu 24.04 amd64','Linux Mint 22.x amd64','Debian 13 amd64'],'same_binary_for_all_targets':True,'runtime_count':runtime_count,'functional_files_verified':len(seen),'checks':logs,'db_default_port':3306,'db_default_user':'root','phpmyadmin_version':'5.2.3','lintian_reviewed_warnings':exceptions,'limits':['No full desktop VM/reboot/native Polkit-agent verification','Other distro releases and arm64 unverified','APT may download missing OS libraries','Existing custom ports and account passwords preserved']}
 (validation/'results.json').write_text(json.dumps(report,indent=2)+'\n')
-shutil.copy2(ROOT/'docs/UNIFIED_PACKAGE.md',validation/'BUILD_REPORT.md')
 # A separate corresponding-source asset is optional to install, provided with binaries.
 source_dir=ROOT/'dist'/f'sources-{VERSION}';source_dir.mkdir(exist_ok=True)
 compat=source_dir/'compat';compat.mkdir(exist_ok=True)
@@ -76,7 +75,7 @@ for field,checksum in [('archive','sha256'),('source_archive','source_sha256')]:
  file=BUILD/'phpmyadmin'/pma[field];assert sha(file)==pma[checksum]
  shutil.copy2(file,source_dir/'upstream'/file.name)
 with tarfile.open(source_dir/f'larsana-source-{VERSION}.tar.gz','w:gz') as tar:
- for name in ['src','tools','tests','packaging','runtimes','docs','.github','.gitignore','README.md','README.id.md','CONTRIBUTING.md','LICENSE','pyproject.toml']:
+ for name in ['src','tools','tests','packaging','runtimes','.github','.gitignore','README.md','README.id.md','CONTRIBUTING.md','LICENSE','pyproject.toml']:
   tar.add(ROOT/name,arcname=f'larsana-{VERSION}/'+name,filter=lambda member:None if '__pycache__' in member.name else member)
 (source_dir/'SHA256SUMS').write_text(''.join(sha(p)+'  '+str(p.relative_to(source_dir))+'\n' for p in sorted(source_dir.rglob('*')) if p.is_file() and p.name!='SHA256SUMS'))
 release=ROOT/'releases';release.mkdir(exist_ok=True)

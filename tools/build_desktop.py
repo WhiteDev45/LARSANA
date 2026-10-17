@@ -67,7 +67,7 @@ main()
         target=STAGE/dest;target.parent.mkdir(parents=True,exist_ok=True);shutil.copy(ROOT/source,target)
     doc=STAGE/'usr/share/doc/larsana'
     doc.mkdir(parents=True)
-    for source in ['LICENSE','README.md','docs/PLAN.md','docs/BUILD_REPORT.md','docs/UI_REFERENCE.md']:
+    for source in ['LICENSE','README.md','README.id.md']:
         if (ROOT/source).exists(): shutil.copy(ROOT/source,doc/Path(source).name)
     shutil.copy(ROOT/'packaging/THIRD_PARTY.md',doc/'THIRD_PARTY.md')
     shutil.copytree(ROOT/'packaging/licenses',doc/'licenses',dirs_exist_ok=True)

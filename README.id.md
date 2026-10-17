@@ -107,7 +107,7 @@ Menjalankan GUI dari source saja tidak memasang runtime atau phpMyAdmin. Gunakan
 
 Versi/checksum sumber runtime dikunci dalam `runtimes/sources.lock.json`; phpMyAdmin dikunci dalam `runtimes/phpmyadmin.lock.json`. Tool build rootless berada di `tools/`. Packaging memerlukan runtime hasil kompilasi, payload desktop, builder noble, dan sumber dependensi yang sudah disiapkan; `build_unified.py` bukan perintah build mandiri dari checkout kosong.
 
-Baca [dokumentasi packaging](docs/UNIFIED_PACKAGE.md), [rencana pengembangan](docs/PLAN.md), [panduan kontribusi](CONTRIBUTING.md), dan [panduan publikasi GitHub](docs/GITHUB_PUBLISH.md). Workflow GitHub menjalankan pemeriksaan core Python; workflow tersebut tidak membangun atau mensertifikasi installer lengkap.
+Baca [panduan kontribusi](CONTRIBUTING.md) untuk ketentuan pengembangan. Workflow GitHub menjalankan pemeriksaan core Python; workflow tersebut tidak membangun atau mensertifikasi installer lengkap.
 
 ## Lisensi dan ketersediaan source
 
