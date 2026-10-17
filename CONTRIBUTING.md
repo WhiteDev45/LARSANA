@@ -1,6 +1,6 @@
 # Contributing to LARSANA
 
-Read `docs/PLAN.md` and `.agents/skills/larsana-development/SKILL.md` for product requirements and runtime isolation rules. Code contributions use GPL-3.0-or-later; preserve upstream notices when modifying packaging.
+Read `docs/PLAN.md` and `docs/UNIFIED_PACKAGE.md` for product requirements, runtime isolation rules, and packaging requirements. Code contributions use GPL-3.0-or-later; preserve upstream notices when modifying packaging.
 
 Keep desktop/QML and the Python core separate. Validate changes with the unit suite and, for runtime changes, real HTTP/FPM/database tests in the rootless builder. Explain the target distro/architecture and the checks actually run in change descriptions.
 

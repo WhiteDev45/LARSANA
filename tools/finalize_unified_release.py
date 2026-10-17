@@ -83,7 +83,7 @@ for field,checksum in [('archive','sha256'),('source_archive','source_sha256')]:
  assert sha(file)==pma[checksum]
  shutil.copy2(file,source_dir/'upstream'/file.name)
 with tarfile.open(source_dir/f'larsana-source-{VERSION}.tar.gz','w:gz') as tar:
- for name in ['src','tools','tests','packaging','runtimes','docs','.agents','.github','.gitignore','README.md','CONTRIBUTING.md','LICENSE','pyproject.toml']:
+ for name in ['src','tools','tests','packaging','runtimes','docs','.github','.gitignore','README.md','CONTRIBUTING.md','LICENSE','pyproject.toml']:
   tar.add(ROOT/name,arcname=f'larsana-{VERSION}/'+name,filter=lambda member:None if '__pycache__' in member.name else member)
 (source_dir/'SHA256SUMS').write_text(''.join(sha(p)+'  '+str(p.relative_to(source_dir))+'\n' for p in sorted(source_dir.rglob('*')) if p.is_file() and p.name!='SHA256SUMS'))
 release=ROOT/'releases';release.mkdir(exist_ok=True)

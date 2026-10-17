@@ -11,3 +11,6 @@ releases/
 .env.*
 !.env.example
 *.deb
+
+# Local development assistant configuration
+.agents/
