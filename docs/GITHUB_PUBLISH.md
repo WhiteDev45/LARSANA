@@ -74,12 +74,12 @@ sha256sum releases/larsana_1.2.1_amd64.deb
 
 ## 4. Sertakan corresponding source
 
-GitHub otomatis membuat arsip source repository pada tag tersebut. Arsip ini tidak mencakup runtime/dependensi vendor di folder yang diabaikan Git. Untuk binary yang dibagikan, publikasikan juga source upstream yang bersesuaian, notices, dan resep/patch build yang sudah disiapkan di `dist/unified-sources/`.
+GitHub otomatis membuat arsip source repository pada tag tersebut. Arsip ini tidak mencakup runtime/dependensi vendor di folder yang diabaikan Git. Untuk binary yang dibagikan, publikasikan juga source upstream yang bersesuaian, notices, dan resep/patch build yang sudah disiapkan di `dist/sources-1.2.1/`.
 
 Bila perlu, siapkan arsip source dalam beberapa bagian berukuran di bawah batas aset GitHub:
 
 ```bash
-tar -C dist -cf - unified-sources | split -b 1800M - dist/larsana-corresponding-source-1.2.1.tar.part-
+tar -C dist -cf - sources-1.2.1 | split -b 1800M - dist/larsana-corresponding-source-1.2.1.tar.part-
 ```
 
 Unggah **semua** file `dist/larsana-corresponding-source-1.2.1.tar.part-*` sebagai aset source di release yang sama. Untuk membuka source, penerima menggabungkan bagian-bagiannya:

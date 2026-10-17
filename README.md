@@ -113,4 +113,4 @@ Read the [packaging documentation](docs/UNIFIED_PACKAGE.md), [development plan](
 
 The Python/Qt application uses [GPL-3.0-or-later](LICENSE). The phpMyAdmin PHP router is an explicit GPL-2.0-only exception; see [its notice](packaging/phpmyadmin-router.copyright). phpMyAdmin, runtimes, Qt, and other bundled dependencies retain their upstream licenses and notices.
 
-Binary distributions must be accompanied by the corresponding source and build/patch instructions required by those licenses. The prepared release sources are in `dist/unified-sources/` locally; maintainers publish them alongside the installer. They are not additional installation dependencies.
+Binary distributions must be accompanied by the corresponding source and build/patch instructions required by those licenses. The prepared release sources are in `dist/sources-1.2.1/` locally; maintainers publish them alongside the installer. They are not additional installation dependencies.
