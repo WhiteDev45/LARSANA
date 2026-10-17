@@ -1,0 +1,13 @@
+{
+  "version": "5.2.3",
+  "archive": "phpMyAdmin-5.2.3-all-languages.tar.xz",
+  "directory": "phpMyAdmin-5.2.3-all-languages",
+  "url": "https://files.phpmyadmin.net/phpMyAdmin/5.2.3/phpMyAdmin-5.2.3-all-languages.tar.xz",
+  "sha256": "57881348297c4412f86c410547cf76b4d8a236574dd2c6b7d6a2beebe7fc44e3",
+  "license": "GPL-2.0-only",
+  "php_series": "8.3",
+  "verified_from": "https://www.phpmyadmin.net/downloads/",
+  "source_archive": "phpMyAdmin-5.2.3-source.tar.xz",
+  "source_url": "https://files.phpmyadmin.net/phpMyAdmin/5.2.3/phpMyAdmin-5.2.3-source.tar.xz",
+  "source_sha256": "df1e7a4363db80af7916f4c6b7ceb25457baf50b3647c05b48ef59199be075e0"
+}

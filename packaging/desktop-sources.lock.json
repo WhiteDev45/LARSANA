@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "sources": [
+    {
+      "id": "qtbase",
+      "version": "6.8.3",
+      "url": "https://download.qt.io/archive/qt/6.8/6.8.3/submodules/qtbase-everywhere-src-6.8.3.tar.xz",
+      "sha256": "56001b905601bb9023d399f3ba780d7fa940f3e4861e496a7c490331f49e0b80",
+      "verification": "SHA256 from official Qt Metalink metadata over HTTPS"
+    },
+    {
+      "id": "qtdeclarative",
+      "version": "6.8.3",
+      "url": "https://download.qt.io/archive/qt/6.8/6.8.3/submodules/qtdeclarative-everywhere-src-6.8.3.tar.xz",
+      "sha256": "1f03a2b8f5588b4face7da87926e9b2c1372b3a32157c52df07a75067a9db1af",
+      "verification": "SHA256 from official Qt Metalink metadata over HTTPS"
+    },
+    {
+      "id": "qttools",
+      "version": "6.8.3",
+      "url": "https://download.qt.io/archive/qt/6.8/6.8.3/submodules/qttools-everywhere-src-6.8.3.tar.xz",
+      "sha256": "02a4e219248b94f1333df843d25763f35251c1074cdc4fb5bda67d340f8c8b3a",
+      "verification": "SHA256 from official Qt Metalink metadata over HTTPS"
+    },
+    {
+      "id": "qtsvg",
+      "version": "6.8.3",
+      "url": "https://download.qt.io/archive/qt/6.8/6.8.3/submodules/qtsvg-everywhere-src-6.8.3.tar.xz",
+      "sha256": "35eb516460f00f264eb504baa253432384351cf23fb9980a5857190e8deef438",
+      "verification": "SHA256 from official Qt Metalink metadata over HTTPS"
+    },
+    {
+      "id": "qtwayland",
+      "version": "6.8.3",
+      "url": "https://download.qt.io/archive/qt/6.8/6.8.3/submodules/qtwayland-everywhere-src-6.8.3.tar.xz",
+      "sha256": "20fe385887d21190165a3180c17dcfc8b9a0e1da4ec76865b6334bdc709994b0",
+      "verification": "SHA256 from official Qt Metalink metadata over HTTPS"
+    },
+    {
+      "id": "qtimageformats",
+      "version": "6.8.3",
+      "url": "https://download.qt.io/archive/qt/6.8/6.8.3/submodules/qtimageformats-everywhere-src-6.8.3.tar.xz",
+      "sha256": "049bfb99845e4801672aca07c3c4fc4c140f932a3a33faa899419579e33ef1c8",
+      "verification": "SHA256 from official Qt Metalink metadata over HTTPS"
+    },
+    {
+      "id": "qtquicktimeline",
+      "version": "6.8.3",
+      "url": "https://download.qt.io/archive/qt/6.8/6.8.3/submodules/qtquicktimeline-everywhere-src-6.8.3.tar.xz",
+      "sha256": "b2ba57fa4fb929d3cd103dff65dd7a62dc2e3852f9a4fddd081e4a759b684fdd",
+      "verification": "SHA256 from official Qt Metalink metadata over HTTPS"
+    },
+    {
+      "id": "qttranslations",
+      "version": "6.8.3",
+      "url": "https://download.qt.io/archive/qt/6.8/6.8.3/submodules/qttranslations-everywhere-src-6.8.3.tar.xz",
+      "sha256": "c3c61d79c3d8fe316a20b3617c64673ce5b5519b2e45535f49bee313152fa531",
+      "verification": "SHA256 from official Qt Metalink metadata over HTTPS"
+    },
+    {
+      "id": "qtlanguageserver",
+      "version": "6.8.3",
+      "url": "https://download.qt.io/archive/qt/6.8/6.8.3/submodules/qtlanguageserver-everywhere-src-6.8.3.tar.xz",
+      "sha256": "e4d320073c55b3a418a784e7866c43bc3e3d52817368be56e7d468866ff8b469",
+      "verification": "SHA256 from official Qt Metalink metadata over HTTPS"
+    },
+    {
+      "id": "qtshadertools",
+      "version": "6.8.3",
+      "url": "https://download.qt.io/archive/qt/6.8/6.8.3/submodules/qtshadertools-everywhere-src-6.8.3.tar.xz",
+      "sha256": "f6ec88bf42deba84d8f6b5d0914636ceed4749ccb51d1945b2f79b322b7ecf47",
+      "verification": "SHA256 from official Qt Metalink metadata over HTTPS"
+    },
+    {
+      "id": "pyside-shiboken",
+      "version": "6.8.3",
+      "url": "https://download.qt.io/official_releases/QtForPython/pyside6/PySide6-6.8.3-src/pyside-setup-everywhere-src-6.8.3.tar.xz",
+      "sha256": "d2c896f7f1a6a7ea4c9f98cfe317272fd139703ddf612b86999f09e48aeef0e6",
+      "verification": "SHA256 from official Qt Metalink metadata over HTTPS"
+    },
+    {
+      "id": "icu",
+      "version": "73.2",
+      "url": "https://github.com/unicode-org/icu/releases/download/release-73-2/icu4c-73_2-src.tgz",
+      "sha256": "818a80712ed3caacd9b652305e01afc7fa167e6f2e94996da44b90c2ab604ce1",
+      "verification": "Official Unicode ICU release over HTTPS; SHA256 pinned on retrieval"
+    }
+  ]
+}

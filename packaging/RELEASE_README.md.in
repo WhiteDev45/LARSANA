@@ -1,0 +1,25 @@
+# LARSANA 0.1.1 — @SUITE@ / amd64
+
+Build offline untuk suite @SUITE@. Noble: Ubuntu 24.04 / Mint 22.x. Trixie: Debian 13. Gunakan hanya bundle yang sesuai distro.
+
+Dari direktori ini:
+
+```bash
+sha256sum -c SHA256SUMS
+sudo sh ./install-offline.sh
+larsana
+```
+
+Jalankan `larsana` sebagai pengguna biasa setelah instalasi. Installer memakai repository file lokal bertanda tangan, menyimpan salinannya di /opt/larsana-packages-@SUITE@-amd64, dan tidak memerlukan download internet. Tidak ada service pengembangan yang dijalankan saat instalasi.
+
+Untuk pemasangan dengan dependency dari APT distro:
+
+```bash
+sudo apt install ./larsana_0.1.1_amd64.deb ./larsana-*.deb
+```
+
+Start All menjalankan Apache atau Nginx, PHP-FPM terpilih, dan MariaDB. HTTP awal http://localhost:8080, database port 3307. Root proyek ~/Larsana/www. Pilihan MariaDB memakai data terpisah per seri. Stop All sebelum upgrade/remove runtime. Remove/purge mempertahankan proyek dan database di home pengguna.
+
+Isi: 13 paket LARSANA, repository beserta dependency closure distro, source LARSANA dan upstream, manifest/checksum, screenshot, serta validation/. Kunci tanda tangan ini adalah kunci build lokal, bukan identitas rilis publik.
+
+Kode LARSANA: GPL-3.0-or-later. Komponen upstream mempertahankan lisensinya. Lihat BUILD_REPORT.md untuk rincian uji dan batas validasi. VM desktop/reboot/agent Polkit nyata belum diuji; kesamaan pixel-perfect Laragon belum dinyatakan.

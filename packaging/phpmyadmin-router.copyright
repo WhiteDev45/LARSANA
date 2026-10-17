@@ -1,0 +1,7 @@
+The file src/larsana/phpmyadmin-router.php (installed as
+/usr/lib/larsana/larsana/phpmyadmin-router.php) is licensed under
+GPL-2.0-only, Copyright 2026 LARSANA Contributors. This is an explicit
+exception to the GPL-3.0-or-later license of the Python/Qt application,
+so that the PHP router can be used together with phpMyAdmin's GPLv2 code.
+See phpmyadmin-LICENSE in this directory for the full GPL version 2 text.
+phpMyAdmin and its dependencies retain their respective upstream notices.

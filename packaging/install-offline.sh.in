@@ -1,0 +1,23 @@
+#!/bin/sh
+set -eu
+if [ "$(id -u)" -ne 0 ]; then
+    echo 'Run this installer with sudo.' >&2
+    exit 1
+fi
+. /etc/os-release
+actual_suite=${UBUNTU_CODENAME:-${VERSION_CODENAME:-}}
+if [ "$actual_suite" != '@SUITE@' ] || [ "$(dpkg --print-architecture)" != 'amd64' ]; then
+    echo 'This bundle requires @SUITE@ / amd64. Use the build for your distribution.' >&2
+    exit 1
+fi
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+gpgv --keyring "$script_dir/repository/larsana-local.gpg" "$script_dir/repository/InRelease"
+install_dir=/opt/larsana-packages-@SUITE@-amd64
+mkdir -p "$install_dir"
+cp -a "$script_dir/repository/." "$install_dir/"
+chmod -R a+rX "$install_dir"
+install -m 644 "$install_dir/larsana-local.gpg" /usr/share/keyrings/larsana-local-@SUITE@.gpg
+printf 'deb [signed-by=/usr/share/keyrings/larsana-local-@SUITE@.gpg] file:%s ./\n' "$install_dir" > /etc/apt/sources.list.d/larsana-local-@SUITE@.list
+apt-get -o Dir::Etc::sourcelist=/etc/apt/sources.list.d/larsana-local-@SUITE@.list -o Dir::Etc::sourceparts=- update
+apt-get -o Dir::Etc::sourcelist=/etc/apt/sources.list.d/larsana-local-@SUITE@.list -o Dir::Etc::sourceparts=- --no-install-recommends install larsana-full xterm xfonts-base fonts-dejavu-core pkexec polkitd
+echo 'LARSANA installed. Run larsana from your regular user session.'

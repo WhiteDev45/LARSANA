@@ -1,0 +1,20 @@
+{
+  "reason": "Official phpMyAdmin 5.2.3 assets are intentionally bundled at upstream versions for the single installer. Do not substitute system JavaScript versions. Corresponding source and upstream dependency notices are distributed; these exact 14 paths are reviewed packaging exceptions.",
+  "upstream_lock": "runtimes/phpmyadmin.lock.json",
+  "warnings": [
+    "W: larsana: embedded-javascript-library please use libjs-codemirror [usr/lib/larsana/phpmyadmin/js/vendor/codemirror/lib/codemirror.css]",
+    "W: larsana: embedded-javascript-library please use libjs-codemirror [usr/lib/larsana/phpmyadmin/js/vendor/codemirror/lib/codemirror.js]",
+    "W: larsana: embedded-javascript-library please use libjs-jquery [usr/lib/larsana/phpmyadmin/doc/html/_static/jquery.js]",
+    "W: larsana: embedded-javascript-library please use libjs-jquery [usr/lib/larsana/phpmyadmin/js/vendor/jquery/jquery.min.js]",
+    "W: larsana: embedded-javascript-library please use libjs-jquery-tablesorter [usr/lib/larsana/phpmyadmin/js/vendor/jquery/jquery.tablesorter.js]",
+    "W: larsana: embedded-javascript-library please use libjs-jquery-ui [usr/lib/larsana/phpmyadmin/js/vendor/jquery/jquery-ui.min.js]",
+    "W: larsana: embedded-javascript-library please use libjs-jquery-ui [usr/lib/larsana/phpmyadmin/themes/bootstrap/jquery/jquery-ui.css]",
+    "W: larsana: embedded-javascript-library please use libjs-jquery-ui [usr/lib/larsana/phpmyadmin/themes/metro/jquery/jquery-ui.css]",
+    "W: larsana: embedded-javascript-library please use libjs-jquery-ui [usr/lib/larsana/phpmyadmin/themes/original/jquery/jquery-ui.css]",
+    "W: larsana: embedded-javascript-library please use libjs-jquery-ui [usr/lib/larsana/phpmyadmin/themes/pmahomme/jquery/jquery-ui.css]",
+    "W: larsana: embedded-javascript-library please use libjs-underscore [usr/lib/larsana/phpmyadmin/doc/html/_static/underscore.js]",
+    "W: larsana: embedded-javascript-library please use sphinx [usr/lib/larsana/phpmyadmin/doc/html/_static/doctools.js]",
+    "W: larsana: embedded-javascript-library please use sphinx [usr/lib/larsana/phpmyadmin/doc/html/_static/language_data.js]",
+    "W: larsana: embedded-javascript-library please use sphinx [usr/lib/larsana/phpmyadmin/doc/html/_static/searchtools.js]"
+  ]
+}

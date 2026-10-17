@@ -1,0 +1,23 @@
+.TH LARSANA 1 "October 2026" "LARSANA 1.2.0" "User Commands"
+.SH NAME
+larsana \- local web development desktop for Linux
+.SH SYNOPSIS
+.B larsana
+.RI [ options ]
+.SH DESCRIPTION
+Manage isolated Apache or Nginx, PHP-FPM and MariaDB runtimes from a compact Qt desktop.
+Run as a normal user. Install runtime packages before starting services.
+.SH OPTIONS
+.TP
+.B --doctor
+Print installed runtimes and settings as JSON without starting services.
+Live service state is displayed in the desktop application.
+.TP
+.B --version
+Print the application version.
+.SH FILES
+Configuration, logs and database data follow the XDG directories under larsana.
+The default project directory is ~/Larsana/www.
+.SH COPYRIGHT
+LARSANA code is licensed under GPL-3.0-or-later.
+Runtime components retain their upstream licenses.

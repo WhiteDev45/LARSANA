@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "sources": [
+    {
+      "id": "php-8.1",
+      "kind": "php",
+      "series": "8.1",
+      "version": "8.1.34",
+      "channel": "legacy",
+      "url": "https://www.php.net/distributions/php-8.1.34.tar.xz",
+      "sha256": "ffa9e0982e82eeaea848f57687b425ed173aa278fe563001310ae2638db5c251",
+      "verification": "SHA256 matched official PHP release API over HTTPS"
+    },
+    {
+      "id": "php-8.2",
+      "kind": "php",
+      "series": "8.2",
+      "version": "8.2.34",
+      "channel": "stable",
+      "url": "https://www.php.net/distributions/php-8.2.34.tar.xz",
+      "sha256": "5351330c54de240f54f7527c26ef292e239749e6fe11db0330acb5317e02bb39",
+      "verification": "SHA256 matched official PHP release API over HTTPS"
+    },
+    {
+      "id": "php-8.3",
+      "kind": "php",
+      "series": "8.3",
+      "version": "8.3.35",
+      "channel": "stable",
+      "url": "https://www.php.net/distributions/php-8.3.35.tar.xz",
+      "sha256": "ff4630fbbbd94359134b7d3c223db59329905bdc4f5a9ef93d257b48e358619a",
+      "verification": "SHA256 matched official PHP release API over HTTPS"
+    },
+    {
+      "id": "php-8.4",
+      "kind": "php",
+      "series": "8.4",
+      "version": "8.4.26",
+      "channel": "stable",
+      "url": "https://www.php.net/distributions/php-8.4.26.tar.xz",
+      "sha256": "32a2de53862ad44ed4a5005244ce4f1b50c271e74dced215449a4443b40569f1",
+      "verification": "SHA256 matched official PHP release API over HTTPS"
+    },
+    {
+      "id": "php-8.5",
+      "kind": "php",
+      "series": "8.5",
+      "version": "8.5.11",
+      "channel": "stable",
+      "url": "https://www.php.net/distributions/php-8.5.11.tar.xz",
+      "sha256": "d9be75c08e8c316f4c8f4194d8fbe1750a15f6a6d9d4e3fe72082abeeb800360",
+      "verification": "SHA256 matched official PHP release API over HTTPS"
+    },
+    {
+      "id": "nginx",
+      "kind": "nginx",
+      "series": "1.30",
+      "version": "1.30.6",
+      "channel": "stable",
+      "url": "https://nginx.org/download/nginx-1.30.6.tar.gz",
+      "sha256": "3cf46f5ed7504d460125866b7bea99fb357f31d887e2e63b35503310e9b8b6c8",
+      "verification": "OpenPGP signature verified; official pluknet key D6786CE303D9A9022998DC6CC8464D549AF75C0A"
+    },
+    {
+      "id": "apache-2.4",
+      "kind": "apache",
+      "series": "2.4",
+      "version": "2.4.69",
+      "channel": "stable",
+      "url": "https://archive.apache.org/dist/httpd/httpd-2.4.69.tar.bz2",
+      "sha256": "c5e6ebc66e349b87d7fc6916ae7cc2a808ed348003de134cf9e9d89d3e2cc73d",
+      "verification": "SHA256 matched official upstream source checksums over HTTPS"
+    },
+    {
+      "download_url": "https://mirror.mariadb.org/mariadb-10.11.19/source/mariadb-10.11.19.tar.gz",
+      "id": "mariadb-10.11",
+      "kind": "mariadb",
+      "series": "10.11",
+      "version": "10.11.19",
+      "channel": "lts",
+      "url": "https://archive.mariadb.org/mariadb-10.11.19/source/mariadb-10.11.19.tar.gz",
+      "sha256": "b8e543ee69d380fb1cfd563226f49e0fe96e4d67e7b7a9045ee514a168ed2066",
+      "verification": "SHA256 matched official upstream source checksums over HTTPS"
+    },
+    {
+      "download_url": "https://mirror.mariadb.org/mariadb-12.3.3/source/mariadb-12.3.3.tar.gz",
+      "id": "mariadb-12.3",
+      "kind": "mariadb",
+      "series": "12.3",
+      "version": "12.3.3",
+      "channel": "lts",
+      "url": "https://archive.mariadb.org/mariadb-12.3.3/source/mariadb-12.3.3.tar.gz",
+      "sha256": "e99d739fd4a55f9a11dea7bd2287a262673e287550af3071c8469dd2bec0c163",
+      "verification": "SHA256 matched official upstream source checksums over HTTPS"
+    },
+    {
+      "download_url": "https://mirror.mariadb.org/mariadb-13.0.2/source/mariadb-13.0.2.tar.gz",
+      "id": "mariadb-13.0",
+      "kind": "mariadb",
+      "series": "13.0",
+      "version": "13.0.2",
+      "channel": "stable",
+      "url": "https://archive.mariadb.org/mariadb-13.0.2/source/mariadb-13.0.2.tar.gz",
+      "sha256": "8ee8d955530faedcea344535de85495afb5b98128bbf660e56893e93e21ee8f7",
+      "verification": "SHA256 matched official upstream source checksums over HTTPS"
+    },
+    {
+      "id": "mariadb-11.8",
+      "kind": "mariadb",
+      "series": "11.8",
+      "version": "11.8.9",
+      "channel": "lts",
+      "url": "https://archive.mariadb.org/mariadb-11.8.9/source/mariadb-11.8.9.tar.gz",
+      "download_url": "https://mirror.mariadb.org/mariadb-11.8.9/source/mariadb-11.8.9.tar.gz",
+      "sha256": "2e015b7e91004142eda8b3a20d3ceb875cf2ae55e72603e7222cd497d4e56fc6",
+      "verification": "SHA256 matched official MariaDB source checksums over HTTPS"
+    }
+  ]
+}

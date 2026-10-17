@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "larsana"
+version = "1.2.0"
+description = "A compact local web development environment for Linux"
+requires-python = ">=3.10"
+license = {text = "GPL-3.0-or-later"}
+dependencies = ["PySide6-Essentials==6.8.3"]
+
+[project.scripts]
+larsana = "larsana.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+larsana = ["qml/*.qml", "qml/*.svg", "*.json", "*.php"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

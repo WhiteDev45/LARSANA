@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=LARSANA
+Comment=Local development, on Linux
+Exec=larsana
+Icon=larsana
+Terminal=false
+Categories=Development;WebDevelopment;
+StartupWMClass=LARSANA
