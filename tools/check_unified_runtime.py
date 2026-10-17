@@ -3,7 +3,7 @@
 from pathlib import Path
 import argparse,subprocess
 ROOT=Path(__file__).resolve().parents[1]
-p=argparse.ArgumentParser();p.add_argument('--target',choices=['noble','trixie'],required=True);p.add_argument('--gui',action='store_true');p.add_argument('--ldd',action='store_true');p.add_argument('--crypto',action='store_true');p.add_argument('--unit',action='store_true');p.add_argument('--phpmyadmin',action='store_true');args=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--target',choices=['noble','trixie'],required=True);p.add_argument('--gui',action='store_true');p.add_argument('--ldd',action='store_true');p.add_argument('--crypto',action='store_true');p.add_argument('--unit',action='store_true');p.add_argument('--phpmyadmin',action='store_true');p.add_argument('--database-access',action='store_true');p.add_argument('--laravel',action='store_true');args=p.parse_args()
 fs=(ROOT if args.target=='noble' else ROOT/'.build/targets/debian13')/'.build/rootfs'
 (fs/'usr/lib/larsana').mkdir(parents=True,exist_ok=True)
 out=ROOT/'.build/unified-tests'/args.target;out.mkdir(parents=True,exist_ok=True)
@@ -28,6 +28,8 @@ print('PASS native ELF dependency resolution',count)
  cmd=['/usr/bin/python3','-c',code]
 elif args.unit:
  cmd=['/usr/bin/python3','-c',"import sys;sys.path[:0]=['/work/src','/work/.build/targets/debian13/.build/test-python'];import pytest;raise SystemExit(pytest.main(['-q','-p','no:cacheprovider','/work/tests']))"]
+elif args.database_access:cmd=['/usr/bin/python3','tools/mariadb_access_smoke.py']
+elif args.laravel:cmd=['/usr/bin/python3','tools/laravel_smoke.py']
 elif args.phpmyadmin:cmd=['/usr/bin/python3','tools/phpmyadmin_smoke.py']
 elif args.crypto:cmd=['/usr/bin/python3','tools/unified_crypto_smoke.py']
 else:cmd=['/usr/bin/xvfb-run','-a','/usr/bin/python3','tools/gui_smoke.py'] if args.gui else ['/usr/bin/python3','tools/smoke_runtimes.py']

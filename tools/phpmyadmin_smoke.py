@@ -46,7 +46,8 @@ try:
         for path in ['config.inc.php','vendor/autoload.php','libraries/config.default.php','setup/','sql/create_tables.sql','sessions/','%2e%2e/config.inc.php']:
             try: opener.open(url + path); raise AssertionError(path)
             except urllib.error.HTTPError as exc: assert exc.code == 404, (path, exc.code)
-        body = get(opener, url + 'index.php?route=/', {'pma_username':pwd.getpwuid(os.getuid()).pw_name,'pma_password':'','server':'1','target':'index.php','token':token(body)})
+        body = get(opener, url + 'index.php?route=/', {'pma_username':'root','pma_password':'','server':'1','target':'index.php','token':token(body)})
+        print('PASS phpMyAdmin root empty-password login',series,flush=True)
         assert 'input_username' not in body, body[-3000:]
         assert 'LARSANA MariaDB ' + series in body, body[-3000:]
         for asset in re.findall(r'<script[^>]+src="([^"]+)"', body):

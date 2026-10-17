@@ -4,6 +4,7 @@ import contextlib
 import fcntl
 import json
 import os
+import pwd
 import secrets
 from pathlib import Path
 import re
@@ -123,7 +124,12 @@ class Manager:
         lts = [r for r in self.catalog.installed("mariadb") if r["channel"] == "lts"]
         self.settings.setdefault("mariadb", lts[-1]["series"] if lts else "10.11")
         self.settings.setdefault("port", 8080)
-        self.settings.setdefault("db_port", 3307)
+        # Migrate the old default once; leave explicitly chosen other ports alone.
+        if self.settings.get("database_defaults_version", 0) < 1:
+            if self.settings.get("db_port") == 3307:
+                self.settings["db_port"] = 3306
+            self.settings["database_defaults_version"] = 1
+        self.settings.setdefault("db_port", 3306)
         self.settings.setdefault("root", str(Path.home() / "Larsana/www"))
         self.settings.setdefault("dark", False)
         for kind in ("php", "mariadb"):
@@ -406,6 +412,49 @@ TypesConfig {quote(runtime_root / 'conf/mime.types')}
         self.stop("web")
         self.start_web()
 
+    def _bootstrap_mariadb_privileges(self, series):
+        """Enable local root login once per instance, including legacy socket installs.
+
+        CREATE USER alone does not change an existing unix_socket-only account.
+        Only the untouched upstream socket/invalid-password root is converted;
+        existing passwords/plugins are preserved, as are later account edits.
+        """
+        directory = self.paths.data / "mariadb" / series
+        marker = directory / ".larsana-local-root-v1.json"
+        if marker.exists():
+            return
+        client = self.catalog.executable("mariadb", series, "client")
+        sock = self.paths.run / f"mariadb-{series}.sock"
+        base = [client, "--no-defaults", "--protocol=socket", f"--socket={sock}",
+                "--password=", "--batch", "--raw", "--skip-column-names"]
+        query = "SELECT Host, Priv FROM mysql.global_priv WHERE User='root' AND Host IN ('localhost','127.0.0.1');"
+        errors = []
+        for username in dict.fromkeys([pwd.getpwuid(os.getuid()).pw_name, "root"]):
+            args = base + [f"--user={username}"]
+            try:
+                rows = self._run(args, input=query, timeout=15)
+                break
+            except RuntimeError as exc:
+                errors.append(str(exc))
+        else:
+            raise RuntimeError("Tidak dapat menyiapkan akun lokal MariaDB. Akun administrator socket tidak tersedia; kredensial tidak diubah.\n" + errors[-1])
+        accounts = {}
+        for line in rows.splitlines():
+            host, data = line.split("\t", 1)
+            accounts[host] = json.loads(data)
+        local = accounts.get("localhost", {})
+        methods = [local] + local.get("auth_or", [])
+        legacy = (any(m.get("plugin") == "unix_socket" for m in methods)
+                  and local.get("authentication_string", "") in ("", "invalid"))
+        sql = ["CREATE USER IF NOT EXISTS 'root'@'127.0.0.1' IDENTIFIED BY '';",
+               "CREATE USER IF NOT EXISTS 'root'@'localhost' IDENTIFIED BY '';"]
+        if legacy:
+            sql.append("ALTER USER 'root'@'localhost' IDENTIFIED VIA mysql_native_password USING PASSWORD('');")
+        sql += ["GRANT ALL PRIVILEGES ON *.* TO 'root'@'127.0.0.1' WITH GRANT OPTION;",
+                "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;"]
+        self._run(args, input="\n".join(sql), timeout=15)
+        atomic_json(marker, {"version": 1})
+
     def start_database(self):
         if self.running("mariadb"):
             return
@@ -444,6 +493,11 @@ TypesConfig {quote(runtime_root / 'conf/mime.types')}
             except (RuntimeError, subprocess.TimeoutExpired):
                 return False
         self._spawn("mariadb", [exe, f"--defaults-file={conf}"], ready, timeout=90)
+        try:
+            self._bootstrap_mariadb_privileges(series)
+        except Exception:
+            self.stop("mariadb")
+            raise
 
     def open_database(self):
         """Serve the bundled database UI on loopback, using its supported PHP 8.3.

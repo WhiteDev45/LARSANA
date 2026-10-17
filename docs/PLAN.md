@@ -1,6 +1,8 @@
 # Rencana LARSANA
 
-Keputusan terbaru pengguna: rilis **1.2.0** menambahkan phpMyAdmin 5.2.3 ke installer tunggal. PHP 8.3 privat menjalankan UI database secara terpisah dari PHP proyek; akses loopback dan socket MariaDB terpilih. Penomoran 1.2.0 atas permintaan pengguna tidak memperluas klaim pengujian desktop.
+Keputusan terbaru pengguna (1.2.1): default port MariaDB 3306, root localhost dan 127.0.0.1 tanpa password untuk instance lokal, bootstrap akun lama socket-only, preservasi password kustom dan data, serta petunjuk login phpMyAdmin menggunakan root. Default 3307 dimigrasikan satu kali.
+
+Riwayat keputusan: rilis **1.2.0** menambahkan phpMyAdmin 5.2.3 ke installer tunggal. PHP 8.3 privat menjalankan UI database secara terpisah dari PHP proyek; akses loopback dan socket MariaDB terpilih. Penomoran 1.2.0 atas permintaan pengguna tidak memperluas klaim pengujian desktop.
 
 Tanggal keputusan: 17 Oktober 2026. Status: distribusi utama 0.2.0 memakai satu paket lintas noble/trixie amd64; bagian milestone modular berikut adalah riwayat implementasi 0.1.1. Lihat BUILD_REPORT.md untuk bukti uji dan batas validasi desktop; target 1.0 tetap menjadi kriteria lanjutan.
 

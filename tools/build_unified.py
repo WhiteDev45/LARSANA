@@ -4,7 +4,7 @@ from pathlib import Path
 import hashlib,json,re,shutil,subprocess,gzip
 from build_runtimes import sandbox,ROOT,BUILD
 from debian_package import build_deb
-VERSION='1.2.0'
+VERSION='1.2.1'
 STAGE=BUILD/'unified-stage'
 LIB=STAGE/'usr/lib/larsana/compat/lib'
 FS=BUILD/'rootfs'

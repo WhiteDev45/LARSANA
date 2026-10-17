@@ -21,7 +21,7 @@ def run(cmd):subprocess.run(base+cmd,check=True)
 def install(reinstall=False):
  command=['apt-get','-o','Dir::Etc::sourcelist=/dev/null','-o','Dir::Etc::sourceparts=-','--yes','--no-install-recommends']
  if reinstall:command+=['--reinstall']
- run(command+['install','/work/.build/unified-artifacts/larsana_1.2.0_amd64.deb'])
+ run(command+['install','/work/.build/unified-artifacts/larsana_1.2.1_amd64.deb'])
 def preserved():
  assert keep.read_text()=='preserve-database' and project.read_text()=='preserve-project'
  assert json.loads(settings.read_text())=={'mariadb':'11.8','php':'8.3'}
@@ -49,11 +49,11 @@ print('PASS active runtime removal guard')
 run(['/usr/bin/python3','-c',guard])
 run(['dpkg','--remove','larsana']);preserved()
 # Upgrade the exact previous public unified installer too.
-run(['apt-get','-o','Dir::Etc::sourcelist=/dev/null','-o','Dir::Etc::sourceparts=-','--yes','--no-install-recommends','install','/work/.build/release-history/larsana_0.2.0_amd64.deb'])
+run(['apt-get','-o','Dir::Etc::sourcelist=/dev/null','-o','Dir::Etc::sourceparts=-','--yes','--no-install-recommends','install','/work/.build/release-history/larsana_1.2.0_amd64.deb'])
 install();preserved();desktop()
 assert (fs/'usr/lib/larsana/phpmyadmin/index.php').is_file()
-assert '1.2.0' in (fs/'usr/lib/larsana/larsana/__init__.py').read_text()
-print('PASS unified 0.2.0 -> 1.2.0 upgrade with phpMyAdmin and preserved data',flush=True)
+assert '1.2.1' in (fs/'usr/lib/larsana/larsana/__init__.py').read_text()
+print('PASS unified 1.2.0 -> 1.2.1 upgrade with phpMyAdmin and preserved data',flush=True)
 run(['dpkg','--remove','larsana']);preserved()
 old=sorted((origin/'dist').glob('*.deb'))
 assert len(old)==13
@@ -62,7 +62,7 @@ install();preserved();desktop()
 status=subprocess.check_output(base+['dpkg-query','-W','-f=${binary:Package} ${db:Status-Status}\n'],text=True)
 installed=[line.split()[0] for line in status.splitlines() if line.endswith(' installed') and line.startswith('larsana')]
 assert installed==['larsana'],installed
-print('PASS modular 0.1.1 -> one-package 1.2.0 migration; only larsana remains installed',flush=True)
+print('PASS modular 0.1.1 -> one-package 1.2.1 migration; only larsana remains installed',flush=True)
 install(reinstall=True);preserved()
 print('PASS single-package reinstall',flush=True)
 run(['dpkg','--purge','larsana']);preserved()

@@ -194,3 +194,14 @@ def test_missing_selected_database_is_not_silently_replaced(manager):
     reloaded=Manager(manager.paths)
     try:assert reloaded.settings['mariadb']=='10.11'
     finally:reloaded.close()
+
+@pytest.mark.parametrize('configured,expected', [(None,3306),(3307,3306),(3310,3310)])
+def test_database_default_port_migration(manager,configured,expected):
+    settings={'php':'8.3'}
+    if configured is not None:settings['db_port']=configured
+    atomic_json(manager.settings_file,settings)
+    updated=Manager(manager.paths)
+    assert updated.settings['db_port']==expected
+    updated.settings['db_port']=3307
+    updated.save()
+    assert Manager(manager.paths).settings['db_port']==3307  # Later explicit preference wins.

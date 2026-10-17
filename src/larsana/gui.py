@@ -148,7 +148,7 @@ class Bridge(QObject):
             elif what == 'database':
                 def launch():
                     self.databaseReady.emit(self.manager.open_database())
-                self.submit(launch, 'phpMyAdmin siap. Instalasi database baru: login memakai nama pengguna Linux dan password kosong.')
+                self.submit(launch, 'phpMyAdmin siap. Login: root — password kosong (default lokal).')
             elif what == 'terminal':
                 self.terminal()
             elif what == 'guide':
@@ -213,7 +213,7 @@ def run(manager, screenshot=None):
     manager.save()  # Remember the initial selection; package updates must not switch databases.
     app = QApplication(['larsana'])
     app.setApplicationName('LARSANA')
-    app.setApplicationVersion('1.2.0')
+    app.setApplicationVersion('1.2.1')
     app.setOrganizationName('LARSANA')
     app.setDesktopFileName('larsana')
     app.setStyle('Fusion')

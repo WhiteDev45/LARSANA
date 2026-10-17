@@ -4,11 +4,11 @@
 
 [English](README.md) · [Bahasa Indonesia](README.id.md)
 
-[![Unduh .deb](https://img.shields.io/badge/Download-.deb-2563eb?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.0/larsana_1.2.0_amd64.deb)
+[![Unduh .deb](https://img.shields.io/badge/Download-.deb-2563eb?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.1/larsana_1.2.1_amd64.deb)
 
-[Unduh .deb — LARSANA 1.2.0](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.0/larsana_1.2.0_amd64.deb)
+[Unduh .deb — LARSANA 1.2.1](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.1/larsana_1.2.1_amd64.deb)
 
-LARSANA 1.2.0 · amd64 · Ubuntu 24.04 / Linux Mint 22.x / Debian 13
+LARSANA 1.2.1 · amd64 · Ubuntu 24.04 / Linux Mint 22.x / Debian 13
 
 LARSANA adalah aplikasi desktop open source untuk pengembangan PHP lokal pada Ubuntu, Linux Mint, dan Debian. Terinspirasi alur kerja Laragon, LARSANA menyediakan Apache, Nginx stable, pilihan versi PHP, MariaDB, serta phpMyAdmin dalam satu installer `.deb`.
 
@@ -22,7 +22,7 @@ Makna tersebut merupakan filosofi merek yang dipilih proyek. LARSANA bertujuan m
 
 > LARSANA: Sarana tangguh dan bersih untuk web development modern di Linux.
 
-## Isi versi 1.2.0
+## Isi versi 1.2.1
 
 | Komponen | Versi yang disertakan |
 | --- | --- |
@@ -44,12 +44,12 @@ Versi distro lain dan ARM64 belum diverifikasi. Pengujian VM desktop/reboot penu
 
 ## Instalasi atau upgrade
 
-Unduh **`larsana_1.2.0_amd64.deb`** dari halaman **Releases** repository ini. ZIP/TAR source code yang dibuat otomatis oleh GitHub merupakan kode sumber; pilih `.deb` untuk memasang aplikasi.
+Unduh **`larsana_1.2.1_amd64.deb`** dari halaman **Releases** repository ini. ZIP/TAR source code yang dibuat otomatis oleh GitHub merupakan kode sumber; pilih `.deb` untuk memasang aplikasi.
 
 Tutup LARSANA sebelum upgrade, lalu jalankan dari folder unduhan:
 
 ```bash
-sudo apt install ./larsana_1.2.0_amd64.deb
+sudo apt install ./larsana_1.2.1_amd64.deb
 larsana
 ```
 
@@ -62,16 +62,27 @@ Aplikasi juga dapat dibuka lewat ikon **LARSANA** di menu aplikasi. Jalankan seb
 | Aplikasi dan runtime bawaan | `/usr/lib/larsana/` |
 | Proyek | `~/Larsana/www/` |
 | Web server | `http://localhost:8080` |
-| Port TCP MariaDB | `3307` |
+| Port TCP MariaDB | `3306` |
 | Pengaturan | `~/.config/larsana/` |
 | Data database | `~/.local/share/larsana/mariadb/<seri>/` |
 | Log | `~/.local/state/larsana/` |
 
-Lokasi data pengguna mengikuti pengaturan XDG jika diatur. Port 3307 membantu menghindari bentrok dengan database sistem atau XAMPP pada 3306. Setiap seri MariaDB memakai direktori data terpisah; mengganti versi tidak memigrasikan atau menurunkan versi database lama.
+Lokasi data pengguna mengikuti pengaturan XDG jika diatur. MariaDB memakai loopback dan port default 3306; port yang sedang dipakai menghasilkan pesan error tanpa menghentikan layanan lain. Default lama 3307 dimigrasikan satu kali; port khusus lainnya dipertahankan. Setiap seri MariaDB memakai direktori data terpisah; mengganti versi tidak memigrasikan atau menurunkan versi database lama.
 
-Klik **phpMyAdmin** untuk menyalakan MariaDB terpilih dan membuka pengelolaan database di browser. Untuk database yang baru diinisialisasi, login memakai nama pengguna Linux (`whoami`) dan password kosong melalui autentikasi socket lokal. Gunakan kredensial yang sudah ada jika akun database pernah diubah.
+Klik **phpMyAdmin** untuk menyalakan MariaDB terpilih dan membuka pengelolaan database di browser. Login memakai **root** dengan password kosong pada instance lokal bawaan. Root dapat diakses melalui socket Unix privat maupun TCP `127.0.0.1:3306`. Password yang sudah diubah pengguna dipertahankan.
 
-Untuk Laravel, gunakan socket Unix MariaDB terpilih jika memakai akun bawaan dengan autentikasi socket. Untuk koneksi TCP ke `127.0.0.1:3307`, buat akun database dengan password dan berikan akses ke database proyek. phpMyAdmin memakai socket privat instance terpilih dan alamat web loopback dengan port yang tersedia. Stop/ganti MariaDB, Stop All, atau keluar dari LARSANA akan menghentikan server phpMyAdmin.
+Untuk koneksi MySQL pada Laravel, gunakan nilai berikut setelah membuat database di phpMyAdmin:
+
+```dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nama_database
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Hapus override `DB_SOCKET` lama jika ingin memakai TCP, lalu jalankan `php artisan config:clear`. Framework harus dikonfigurasi memakai MySQL/MariaDB, bukan SQLite. Default root tanpa password ditujukan untuk pengembangan lokal dan tetap memakai loopback. Kredensial yang sudah diubah tidak direset saat restart. phpMyAdmin tetap memakai socket privat instance terpilih; Stop All atau stop/ganti MariaDB menutup servernya.
 
 ## Menghapus aplikasi
 

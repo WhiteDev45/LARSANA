@@ -19,7 +19,8 @@ m=Manager();m.acquire()
 bridge=Bridge(m)
 engine=QQmlApplicationEngine()
 engine.rootContext().setContextProperty('backend',bridge)
-errors=[];warnings=[]
+errors=[];warnings=[];messages=[]
+bridge.completed.connect(messages.append)
 bridge.error.connect(errors.append)
 engine.warnings.connect(lambda items:warnings.extend([str(i.toString()) for i in items]))
 engine.load('/work/src/larsana/qml/Main.qml')
@@ -63,7 +64,10 @@ try:
     QTest.mouseClick(window,Qt.LeftButton,Qt.NoModifier,QPoint(335,437))
     settled()
     assert urls and urls[0].startswith('http://127.0.0.1:') and m.running('phpmyadmin'), (urls,m.snapshot())
+    assert any('root' in msg and 'password kosong' in msg for msg in messages),messages
+    assert not any('nama pengguna Linux' in msg for msg in messages),messages
     print('PASS desktop phpMyAdmin button opens selected database',flush=True)
+    print('PASS desktop root login guidance updated',flush=True)
     QTest.mouseClick(window,Qt.LeftButton,Qt.NoModifier,QPoint(100,437))
     settled()
     assert all(v=='Stopped' for v in m.snapshot()['status'].values())

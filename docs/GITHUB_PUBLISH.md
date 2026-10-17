@@ -35,7 +35,7 @@ Pastikan `.build/`, `.venv/`, `dist/`, `releases/`, file `.deb`, serta `.env` ti
 
 ```bash
 git diff --cached --stat
-git commit -m "Initial release: LARSANA 1.2.0"
+git commit -m "Initial release: LARSANA 1.2.1"
 ```
 
 Jika Git belum mengenal identitas penulis, atur **hanya untuk repository ini**, lalu ulangi commit:
@@ -56,26 +56,20 @@ Untuk autentikasi HTTPS gunakan GitHub CLI (`gh auth login`) atau personal acces
 
 README.md menampilkan bahasa Inggris; README.id.md menampilkan bahasa Indonesia. Keduanya mempunyai tautan untuk berpindah bahasa.
 
-## 3. Buat GitHub Release v1.2.0
+## 3. Buat GitHub Release v1.2.1
 
-Buka repository → **Releases** → **Draft a new release**. Buat tag `v1.2.0` pada branch `main`, judul **LARSANA 1.2.0**, dan gunakan catatan rilis di bagian berikut. Lampirkan:
+Buka repository → **Releases** → **Draft a new release**. Buat tag `v1.2.1` pada branch `main`, judul **LARSANA 1.2.1**, dan gunakan catatan rilis di bagian berikut. Lampirkan:
 
 ```text
-releases/larsana_1.2.0_amd64.deb
+releases/larsana_1.2.1_amd64.deb
 ```
 
 Installer sekitar 202 MiB. GitHub memblokir file Git biasa di atas 100 MiB; aset Releases harus berukuran di bawah 2 GiB per file. Karena itu installer didistribusikan sebagai aset release, bukan di-commit ke repository. Folder `releases/` lokal tetap berisi satu installer.
 
-SHA256 installer saat panduan dibuat:
-
-```text
-ff9f2c1e01b12c9ec1105d2cd1d84d381e345e7e8d147effb699b371973bf36e
-```
-
 Verifikasi sebelum mengunggah:
 
 ```bash
-sha256sum releases/larsana_1.2.0_amd64.deb
+sha256sum releases/larsana_1.2.1_amd64.deb
 ```
 
 ## 4. Sertakan corresponding source
@@ -85,13 +79,13 @@ GitHub otomatis membuat arsip source repository pada tag tersebut. Arsip ini tid
 Bila perlu, siapkan arsip source dalam beberapa bagian berukuran di bawah batas aset GitHub:
 
 ```bash
-tar -C dist -cf - unified-sources | split -b 1800M - dist/larsana-corresponding-source-1.2.0.tar.part-
+tar -C dist -cf - unified-sources | split -b 1800M - dist/larsana-corresponding-source-1.2.1.tar.part-
 ```
 
-Unggah **semua** file `dist/larsana-corresponding-source-1.2.0.tar.part-*` sebagai aset source di release yang sama. Untuk membuka source, penerima menggabungkan bagian-bagiannya:
+Unggah **semua** file `dist/larsana-corresponding-source-1.2.1.tar.part-*` sebagai aset source di release yang sama. Untuk membuka source, penerima menggabungkan bagian-bagiannya:
 
 ```bash
-cat larsana-corresponding-source-1.2.0.tar.part-* | tar -xf -
+cat larsana-corresponding-source-1.2.1.tar.part-* | tar -xf -
 ```
 
 Pengguna biasa hanya memerlukan **satu `.deb`** untuk memasang aplikasi. Bagian source ditujukan untuk pemenuhan distribusi source dan kebutuhan pengembang. README/source snapshot di arsip rilis lokal berasal dari saat build; dokumentasi terbaru juga tersedia pada tag GitHub yang dipublikasikan.
@@ -100,23 +94,23 @@ Pengguna biasa hanya memerlukan **satu `.deb`** untuk memasang aplikasi. Bagian 
 
 ### English
 
-LARSANA 1.2.0 adds phpMyAdmin 5.2.3 for browser-based MariaDB management. One amd64 .deb includes the desktop, Apache, stable Nginx, PHP 8.1–8.5, MariaDB 10.11/11.8/12.3/13.0, and phpMyAdmin.
+LARSANA 1.2.1 fixes local MariaDB access: root over TCP/socket, default port 3306, and updated phpMyAdmin login guidance. One amd64 .deb includes the desktop, Apache, stable Nginx, PHP 8.1–8.5, MariaDB 10.11/11.8/12.3/13.0, and phpMyAdmin.
 
-Targets Ubuntu 24.04, Linux Mint 22.x, and Debian 13. phpMyAdmin follows the selected database and uses a separate bundled PHP 8.3 process. New database instances use the Linux username and an empty password with local socket authentication.
+Targets Ubuntu 24.04, Linux Mint 22.x, and Debian 13. phpMyAdmin follows the selected database and uses a separate bundled PHP 8.3 process. Local database instances use root with an empty password over a private socket or TCP at 127.0.0.1:3306. Existing custom passwords are preserved.
 
 Installation, upgrades, database persistence, phpMyAdmin login/SQL/import/export, and GUI interactions were tested in isolated noble/trixie environments. Full desktop VM/reboot/tray/real Polkit-agent validation remains incomplete. PHP 8.1 is provided as a legacy/EOL option.
 
-Close LARSANA before installing or upgrading. Download the .deb asset, then run `sudo apt install ./larsana_1.2.0_amd64.deb`. Project and database data are retained on removal. APT may download missing OS libraries. Corresponding source assets are for developers and are not required for installation.
+Close LARSANA before installing or upgrading. Download the .deb asset, then run `sudo apt install ./larsana_1.2.1_amd64.deb`. Project and database data are retained on removal. APT may download missing OS libraries. Corresponding source assets are for developers and are not required for installation.
 
 ### Bahasa Indonesia
 
-LARSANA 1.2.0 menambahkan phpMyAdmin 5.2.3 untuk pengelolaan MariaDB melalui browser. Satu .deb amd64 berisi desktop, Apache, Nginx stable, PHP 8.1–8.5, MariaDB 10.11/11.8/12.3/13.0, dan phpMyAdmin.
+LARSANA 1.2.1 memperbaiki akses MariaDB lokal: root lewat TCP/socket, default port 3306, dan petunjuk login phpMyAdmin terbaru. Satu .deb amd64 berisi desktop, Apache, Nginx stable, PHP 8.1–8.5, MariaDB 10.11/11.8/12.3/13.0, dan phpMyAdmin.
 
-Menargetkan Ubuntu 24.04, Linux Mint 22.x, dan Debian 13. phpMyAdmin mengikuti database terpilih dan memakai proses PHP 8.3 bawaan secara terpisah. Instance database baru memakai nama pengguna Linux dengan password kosong melalui autentikasi socket lokal.
+Menargetkan Ubuntu 24.04, Linux Mint 22.x, dan Debian 13. phpMyAdmin mengikuti database terpilih dan memakai proses PHP 8.3 bawaan secara terpisah. Instance database lokal memakai root dengan password kosong melalui socket privat maupun TCP 127.0.0.1:3306. Password kustom yang sudah ada dipertahankan.
 
 Instalasi, upgrade, persistensi database, login/SQL/impor/ekspor phpMyAdmin, serta interaksi GUI telah diuji pada lingkungan terisolasi noble/trixie. Pengujian VM desktop/reboot/tray/agent Polkit nyata masih belum lengkap. PHP 8.1 disediakan sebagai pilihan legacy/EOL.
 
-Tutup LARSANA sebelum instalasi atau upgrade. Unduh aset .deb, lalu jalankan `sudo apt install ./larsana_1.2.0_amd64.deb`. Penghapusan paket mempertahankan data proyek dan database. APT dapat mengunduh library OS yang belum tersedia. Aset corresponding source ditujukan untuk pengembang dan tidak diperlukan untuk instalasi.
+Tutup LARSANA sebelum instalasi atau upgrade. Unduh aset .deb, lalu jalankan `sudo apt install ./larsana_1.2.1_amd64.deb`. Penghapusan paket mempertahankan data proyek dan database. APT dapat mengunduh library OS yang belum tersedia. Aset corresponding source ditujukan untuk pengembang dan tidak diperlukan untuk instalasi.
 
 ## Referensi resmi
 
