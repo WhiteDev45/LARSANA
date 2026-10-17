@@ -19,6 +19,8 @@ import time
 import urllib.request
 import urllib.error
 
+from .mime import nginx_mime_types
+
 SERIES = {"php": ["8.1", "8.2", "8.3", "8.4", "8.5"], "mariadb": ["10.11", "11.4", "11.8", "12.3", "13.0"]}
 
 
@@ -297,6 +299,8 @@ class Manager:
         if not extra.exists():
             extra.write_text("# LARSANA custom web server directives. Preserved across restarts.\n")
         if web == "nginx":
+            mime = self.paths.config / "nginx-mime.types"
+            mime.write_text(nginx_mime_types((runtime_root / 'conf/mime.types').read_text()))
             blocks = []
             for hostname, root in hosts:
                 blocks.append(f'''server {{
@@ -312,13 +316,13 @@ class Manager:
  }}
 }}''')
             text = f'''daemon off;
-master_process off;
+master_process on;
 worker_processes 1;
 pid {quote(self.paths.run / 'nginx.pid')};
 error_log {quote(self.log_path('web'))};
 events {{ worker_connections 256; }}
 http {{
- include {quote(runtime_root / 'conf/mime.types')};
+ include {quote(mime)};
  default_type application/octet-stream;
  access_log {quote(self.paths.state / 'access.log')};
  client_body_temp_path {quote(self.paths.run / 'nginx-body')};
@@ -372,14 +376,29 @@ TypesConfig {quote(runtime_root / 'conf/mime.types')}
 {chr(10).join(blocks)}
 '''
         conf.write_text(text)
+        if web == "nginx":
+            self.validate_web(conf, runtime)
         return conf, runtime
 
     def web_args(self, conf, runtime, test=False):
         root = Path(runtime["root"])
         exe = str(root / runtime["executables"]["server"])
         if self.settings["web"] == "nginx":
-            return [exe, "-p", str(root) + "/", "-c", str(conf)] + (["-t"] if test else [])
+            return [exe, "-p", str(root) + "/", "-c", str(conf), "-e", str(self.log_path("web"))] + (["-t"] if test else [])
         return [exe, "-f", str(conf)] + (["-t"] if test else ["-DFOREGROUND"])
+
+    def validate_web(self, conf, runtime):
+        output = self._run(self.web_args(conf, runtime, True))
+        if self.settings['web'] == 'nginx':
+            # Let Nginx parse user rules/includes. Keep their mappings unchanged,
+            # removing only colliding defaults from our generated MIME include.
+            extensions = set(re.findall(r'duplicate extension "([^"]+)"', output))
+            if extensions:
+                source = (Path(runtime['root']) / 'conf/mime.types').read_text()
+                mime = self.paths.config / 'nginx-mime.types'
+                mime.write_text(nginx_mime_types(source, exclude=extensions))
+                output = self._run(self.web_args(conf, runtime, True))
+        return output
 
     def healthy_web(self):
         try:
@@ -401,7 +420,7 @@ TypesConfig {quote(runtime_root / 'conf/mime.types')}
         try:
             self.start_php()
             conf, runtime = self.render_web()
-            self._run(self.web_args(conf, runtime, True))
+            self.validate_web(conf, runtime)
             self._spawn("web", self.web_args(conf, runtime), self.healthy_web)
         except Exception:
             if started_php:

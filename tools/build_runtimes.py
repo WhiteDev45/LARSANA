@@ -41,6 +41,12 @@ def package(item, stage):
     installed.parent.mkdir(parents=True,exist_ok=True)
     shutil.copytree(payload,installed,symlinks=True)
     stage=clean
+    if item['kind']=='nginx':
+        import sys
+        sys.path.insert(0,str(ROOT/'src'))
+        from larsana.mime import nginx_mime_types
+        mime=installed/'conf/mime.types'
+        mime.write_text(nginx_mime_types(mime.read_text()))
     roles={
         'nginx':{'server':'sbin/nginx'},
         'apache':{'server':'bin/httpd'},

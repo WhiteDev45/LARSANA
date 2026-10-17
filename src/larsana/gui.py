@@ -166,8 +166,10 @@ class Bridge(QObject):
                 ini, _, _ = self.manager.php_config(self.manager.settings['php'])
                 QDesktopServices.openUrl(QUrl.fromLocalFile(str(ini)))
             elif what == 'config:web':
-                conf, _ = self.manager.render_web()
-                QDesktopServices.openUrl(QUrl.fromLocalFile(str(self.manager.paths.config / (self.manager.settings["web"] + "-extra.conf"))))
+                path = self.manager.paths.config / (self.manager.settings["web"] + "-extra.conf")
+                if not path.exists():
+                    path.write_text('# LARSANA custom web server directives. Preserved across restarts.\n')
+                QDesktopServices.openUrl(QUrl.fromLocalFile(str(path)))
             elif what == 'config:mariadb':
                 path=self.manager.paths.config / ('mariadb-' + self.manager.settings['mariadb'] + '-extra.cnf')
                 if not path.exists():
@@ -213,7 +215,7 @@ def run(manager, screenshot=None):
     manager.save()  # Remember the initial selection; package updates must not switch databases.
     app = QApplication(['larsana'])
     app.setApplicationName('LARSANA')
-    app.setApplicationVersion('1.2.1')
+    app.setApplicationVersion('1.2.2')
     app.setOrganizationName('LARSANA')
     app.setDesktopFileName('larsana')
     app.setStyle('Fusion')

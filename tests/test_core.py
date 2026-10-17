@@ -155,7 +155,9 @@ def test_command_timeout_kills_child_group(manager,tmp_path):
     time.sleep(.9)
     assert not marker.exists()
 
-def test_database_init_never_overwrites_unrecognized_data(manager):
+def test_database_init_never_overwrites_unrecognized_data(manager,monkeypatch):
+    # This data-preservation test must not depend on a host service on port 3306.
+    monkeypatch.setattr('larsana.core.port_available',lambda port:True)
     fake_runtime(manager,'mariadb','10.11',['server','install','admin','client'])
     directory=manager.paths.data/'mariadb/10.11';directory.mkdir(parents=True)
     (directory/'precious.dat').write_text('existing data')

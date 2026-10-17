@@ -4,11 +4,11 @@
 
 [English](README.md) · [Bahasa Indonesia](README.id.md)
 
-[![Download .deb](https://img.shields.io/badge/Download-.deb-2563eb?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.1/larsana_1.2.1_amd64.deb)
+[![Download .deb](https://img.shields.io/badge/Download-.deb-2563eb?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.2/larsana_1.2.2_amd64.deb)
 
-[Download .deb — LARSANA 1.2.1](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.1/larsana_1.2.1_amd64.deb)
+[Download .deb — LARSANA 1.2.2](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.2/larsana_1.2.2_amd64.deb)
 
-LARSANA 1.2.1 · amd64 · Ubuntu 24.04 / Linux Mint 22.x / Debian 13
+LARSANA 1.2.2 · amd64 · Ubuntu 24.04 / Linux Mint 22.x / Debian 13
 
 LARSANA is an open-source desktop environment for local PHP development on Ubuntu, Linux Mint, and Debian. Inspired by Laragon's workflow, it brings Apache, stable Nginx, multiple PHP versions, MariaDB, and phpMyAdmin into one `.deb` installer.
 
@@ -22,7 +22,14 @@ These are the project's chosen brand meanings. LARSANA aims to make everyday dev
 
 > LARSANA: a robust, clean environment for modern web development on Linux.
 
-## Included in version 1.2.1
+## Fixed in 1.2.2
+
+- Nginx serves `.mjs`, including PDF.js modules and workers, as JavaScript automatically.
+- Existing custom MIME rules and includes survive upgrades without duplicate default mappings.
+- Nginx runs with a supervised foreground master for reliable reloads and writable user logs.
+- Apache/Nginx HTTP, reload, PHP switching and package upgrade regressions tested on noble and trixie.
+
+## Included in version 1.2.2
 
 | Component | Included versions |
 | --- | --- |
@@ -44,12 +51,12 @@ Other distribution releases and ARM64 are unverified. Full desktop VM/reboot tes
 
 ## Install or upgrade
 
-Download **`larsana_1.2.1_amd64.deb`** from this repository's **Releases** page. GitHub's automatically generated source ZIP/TAR files are for source code; choose the `.deb` to install the application.
+Download **`larsana_1.2.2_amd64.deb`** from this repository's **Releases** page. GitHub's automatically generated source ZIP/TAR files are for source code; choose the `.deb` to install the application.
 
 Close LARSANA before upgrading, then run from the download directory:
 
 ```bash
-sudo apt install ./larsana_1.2.1_amd64.deb
+sudo apt install ./larsana_1.2.2_amd64.deb
 larsana
 ```
 
@@ -113,4 +120,4 @@ Read the [contribution guide](CONTRIBUTING.md) for development expectations. The
 
 The Python/Qt application uses [GPL-3.0-or-later](LICENSE). The phpMyAdmin PHP router is an explicit GPL-2.0-only exception; see [its notice](packaging/phpmyadmin-router.copyright). phpMyAdmin, runtimes, Qt, and other bundled dependencies retain their upstream licenses and notices.
 
-Binary distributions must be accompanied by the corresponding source and build/patch instructions required by those licenses. The prepared release sources are in `dist/sources-1.2.1/` locally; maintainers publish them alongside the installer. They are not additional installation dependencies.
+Binary distributions must be accompanied by the corresponding source and build/patch instructions required by those licenses. Project source and build recipes are available in this repository; pinned upstream source URLs and checksums are recorded in `runtimes/` and package metadata. Complete source bundles and validation reports are retained locally. The release installer asset is the `.deb` file.

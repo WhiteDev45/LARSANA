@@ -10,7 +10,7 @@ import subprocess
 import sys
 
 ROOT=Path(__file__).resolve().parents[1]
-VERSION='1.2.1'
+VERSION='1.2.2'
 STAGE=ROOT/'.build/stage/desktop'
 
 

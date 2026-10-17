@@ -4,11 +4,11 @@
 
 [English](README.md) · [Bahasa Indonesia](README.id.md)
 
-[![Unduh .deb](https://img.shields.io/badge/Download-.deb-2563eb?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.1/larsana_1.2.1_amd64.deb)
+[![Unduh .deb](https://img.shields.io/badge/Download-.deb-2563eb?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.2/larsana_1.2.2_amd64.deb)
 
-[Unduh .deb — LARSANA 1.2.1](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.1/larsana_1.2.1_amd64.deb)
+[Unduh .deb — LARSANA 1.2.2](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.2/larsana_1.2.2_amd64.deb)
 
-LARSANA 1.2.1 · amd64 · Ubuntu 24.04 / Linux Mint 22.x / Debian 13
+LARSANA 1.2.2 · amd64 · Ubuntu 24.04 / Linux Mint 22.x / Debian 13
 
 LARSANA adalah aplikasi desktop open source untuk pengembangan PHP lokal pada Ubuntu, Linux Mint, dan Debian. Terinspirasi alur kerja Laragon, LARSANA menyediakan Apache, Nginx stable, pilihan versi PHP, MariaDB, serta phpMyAdmin dalam satu installer `.deb`.
 
@@ -22,7 +22,14 @@ Makna tersebut merupakan filosofi merek yang dipilih proyek. LARSANA bertujuan m
 
 > LARSANA: Sarana tangguh dan bersih untuk web development modern di Linux.
 
-## Isi versi 1.2.1
+## Perbaikan 1.2.2
+
+- Nginx otomatis menyajikan `.mjs`, termasuk modul dan worker PDF.js, sebagai JavaScript.
+- Aturan MIME dan include kustom tetap utuh saat upgrade tanpa pemetaan bawaan duplikat.
+- Nginx memakai master foreground yang diawasi agar reload andal dan log dapat ditulis pengguna.
+- Regresi HTTP Apache/Nginx, reload, switching PHP dan upgrade paket diuji pada noble dan trixie.
+
+## Isi versi 1.2.2
 
 | Komponen | Versi yang disertakan |
 | --- | --- |
@@ -44,12 +51,12 @@ Versi distro lain dan ARM64 belum diverifikasi. Pengujian VM desktop/reboot penu
 
 ## Instalasi atau upgrade
 
-Unduh **`larsana_1.2.1_amd64.deb`** dari halaman **Releases** repository ini. ZIP/TAR source code yang dibuat otomatis oleh GitHub merupakan kode sumber; pilih `.deb` untuk memasang aplikasi.
+Unduh **`larsana_1.2.2_amd64.deb`** dari halaman **Releases** repository ini. ZIP/TAR source code yang dibuat otomatis oleh GitHub merupakan kode sumber; pilih `.deb` untuk memasang aplikasi.
 
 Tutup LARSANA sebelum upgrade, lalu jalankan dari folder unduhan:
 
 ```bash
-sudo apt install ./larsana_1.2.1_amd64.deb
+sudo apt install ./larsana_1.2.2_amd64.deb
 larsana
 ```
 
@@ -113,4 +120,4 @@ Baca [panduan kontribusi](CONTRIBUTING.md) untuk ketentuan pengembangan. Workflo
 
 Aplikasi Python/Qt menggunakan [GPL-3.0-or-later](LICENSE). Router PHP phpMyAdmin mempunyai pengecualian GPL-2.0-only; lihat [notice terkait](packaging/phpmyadmin-router.copyright). phpMyAdmin, runtime, Qt, dan dependensi bawaan lainnya mempertahankan lisensi dan notice upstream masing-masing.
 
-Distribusi binary harus disertai source yang bersesuaian serta instruksi build/patch yang diwajibkan lisensinya. Source rilis yang disiapkan tersedia secara lokal di `dist/sources-1.2.1/`; maintainer memublikasikannya bersama installer. Source tersebut bukan dependensi tambahan untuk instalasi.
+Distribusi binary harus disertai source yang bersesuaian serta instruksi build/patch yang diwajibkan lisensinya. Source aplikasi dan resep build tersedia di repository ini; URL source upstream dan checksum dipin pada `runtimes/` serta metadata paket. Bundle source lengkap dan laporan validasi disimpan secara lokal. Asset installer rilis adalah file `.deb`.

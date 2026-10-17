@@ -7,7 +7,7 @@ import socket
 import sys
 import urllib.request
 import urllib.error
-sys.path.insert(0,'/work/src')
+sys.path.insert(0,'/usr/lib/larsana' if Path('/usr/lib/larsana/larsana').is_dir() else '/work/src')
 from larsana.core import Manager
 
 def free_port():

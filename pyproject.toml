@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "larsana"
-version = "1.2.1"
+version = "1.2.2"
 description = "A compact local web development environment for Linux"
 requires-python = ">=3.10"
 license = {text = "GPL-3.0-or-later"}

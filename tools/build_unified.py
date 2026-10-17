@@ -4,7 +4,7 @@ from pathlib import Path
 import hashlib,json,re,shutil,subprocess,gzip
 from build_runtimes import sandbox,ROOT,BUILD
 from debian_package import build_deb
-VERSION='1.2.1'
+VERSION='1.2.2'
 STAGE=BUILD/'unified-stage'
 LIB=STAGE/'usr/lib/larsana/compat/lib'
 FS=BUILD/'rootfs'
@@ -47,6 +47,13 @@ def build():
  copyright=STAGE/'usr/share/doc/larsana/copyright'
  copyright.write_text(copyright.read_text()+'\n'+notice)
  shutil.copy2(ROOT/'packaging/phpmyadmin-router.copyright',STAGE/'usr/share/doc/larsana/phpmyadmin-router.copyright')
+ # Also patch prebuilt component payloads, so old internal .debs cannot restore
+ # the missing mjs mapping when assembling a new unified installer.
+ import sys
+ sys.path.insert(0,str(ROOT/'src'))
+ from larsana.mime import nginx_mime_types
+ for mime in (STAGE/'usr/lib/larsana/runtimes/nginx').glob('*/conf/mime.types'):
+  mime.write_text(nginx_mime_types(mime.read_text()))
  runtime=STAGE/'usr/lib/larsana/runtimes'
  files=[p for p in runtime.rglob('*') if elf(p)]
  private={p.name for p in files}

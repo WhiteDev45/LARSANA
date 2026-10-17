@@ -13,7 +13,7 @@ VERSION=re.search(r'__version__ = "([^"]+)"',(ROOT/'src/larsana/__init__.py').re
 package=BUILD/'unified-artifacts'/f'larsana_{VERSION}_amd64.deb'
 def sha(file):
  with file.open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
-manifest=json.loads((BUILD/'unified-functional-before.json').read_text())
+manifest=json.loads((BUILD/f'release-{VERSION}-functional.json').read_text())
 assert all(sha(STAGE/name)==digest for name,digest in manifest.items()),'Tested functional payload changed'
 checks={
  'smoke':['PASS live PHP switching','PASS DB persistence/PDO/backup/restore 11.8.9','PASS DB persistence/PDO/backup/restore 13.0.2'],
@@ -23,17 +23,18 @@ checks={
  'gui':['PASS desktop root login guidance updated','PASS desktop MariaDB 11.8 selector','PASS desktop Stop All','no QML warnings'],
  'elf':['PASS native ELF dependency resolution 496'],
  'crypto':['PASS private ICU/JPEG/cURL TLS 8.1.34','PASS private ICU/JPEG/cURL TLS 8.5.11'],
- 'unit':['23 passed'],
- 'install':['PASS clean installation from exactly one .deb','PASS active runtime removal guard',f'PASS modular 0.1.1 -> one-package {VERSION} migration; only larsana remains installed',f'PASS unified 1.2.0 -> {VERSION} upgrade with phpMyAdmin and preserved data','PASS single-package reinstall','PASS single-package purge and user data/preferences preservation'],
+ 'unit':['28 passed'],
+ 'web':['PASS apache MIME js/mjs/PDF.js worker','PASS nginx MIME js/mjs/PDF.js worker','PASS nginx 10 actual reloads / 360 concurrent HTTP responses','PASS Nginx master/workers and PHP exit after owner crash'],
+ 'install':['PASS actual candidate clean APT installation','PASS actual 1.2.1 -> candidate APT upgrade','PASS candidate reinstall/purge preserves custom configuration'],
 }
 logs={}
 for suite in ['noble','trixie']:
  for kind,markers in checks.items():
-  file=BUILD/f'unified-{suite}-{kind}.log';value=file.read_text()
+  file=BUILD/f'release-{VERSION}-{suite}-{kind}.log';value=file.read_text()
   assert all(marker in value for marker in markers),str(file)
   assert 'Traceback (most recent call last)' not in value and 'TypeError:' not in value,str(file)
   logs[file.name]=sha(file)
-file=BUILD/'unified-lintian.log';value=file.read_text()
+file=BUILD/f'release-{VERSION}-lintian.log';value=file.read_text()
 assert 'PASS lintian unified package' in value and not any(line.startswith('E: ') for line in value.splitlines()),value
 exceptions=json.loads((ROOT/'packaging/phpmyadmin-lintian-allowlist.json').read_text())
 assert sorted(line for line in value.splitlines() if line.startswith('W: '))==sorted(exceptions['warnings']),value

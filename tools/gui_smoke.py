@@ -23,7 +23,7 @@ errors=[];warnings=[];messages=[]
 bridge.completed.connect(messages.append)
 bridge.error.connect(errors.append)
 engine.warnings.connect(lambda items:warnings.extend([str(i.toString()) for i in items]))
-engine.load('/work/src/larsana/qml/Main.qml')
+engine.load(str(Path(sys.path[0])/'larsana/qml/Main.qml'))
 assert engine.rootObjects(),'QML did not load'
 window=engine.rootObjects()[0]
 
