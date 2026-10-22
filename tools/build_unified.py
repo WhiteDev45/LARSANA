@@ -4,7 +4,7 @@ from pathlib import Path
 import hashlib,json,re,shutil,subprocess,gzip
 from build_runtimes import sandbox,ROOT,BUILD
 from debian_package import build_deb
-VERSION='1.2.2'
+VERSION='1.2.3'
 STAGE=BUILD/'unified-stage'
 LIB=STAGE/'usr/lib/larsana/compat/lib'
 FS=BUILD/'rootfs'
@@ -95,10 +95,10 @@ def build():
  shutil.copy2(source_manifest,doc/'compat-source-manifest.json')
  (STAGE/'usr/share/man/man1/larsana.1.gz').write_bytes(gzip.compress((ROOT/'packaging/larsana.1').read_bytes(),mtime=0))
  (doc/'sources.lock.json').write_bytes((ROOT/'runtimes/sources.lock.json').read_bytes())
- for file in ['README.md','README.id.md']:
+ for file in ['README.md','README.id.md','RELEASE-1.2.3.md']:
   shutil.copy2(ROOT/file,doc/Path(file).name)
  # No component package dependency: all components are owned by this one package.
- deps='python3 (>= 3.10), perl, libc6 (>= 2.39), libstdc++6 (>= 13.1), libgcc-s1, libgl1, libegl1, libopengl0, libglib2.0-0t64 | libglib2.0-0, libdbus-1-3, libfontconfig1, libfreetype6, libx11-6, libx11-xcb1, libxcb1, libxcb-cursor0, libxcb-icccm4, libxcb-image0, libxcb-keysyms1, libxcb-render-util0, libxcb-shape0, libxcb-xfixes0, libxcb-xinerama0, libxcb-randr0, libxcb-render0, libxcb-shm0, libxcb-sync1, libxkbcommon0, libxkbcommon-x11-0, libsm6, libice6, zlib1g, libxext6, fonts-dejavu-core'
+ deps='python3 (>= 3.10), perl, libc6 (>= 2.39), libstdc++6 (>= 13.1), libgcc-s1, libgl1, libegl1, libopengl0, libglib2.0-0t64 | libglib2.0-0, libdbus-1-3, libgssapi-krb5-2, libfontconfig1, libfreetype6, libx11-6, libx11-xcb1, libxcb1, libxcb-cursor0, libxcb-icccm4, libxcb-image0, libxcb-keysyms1, libxcb-render-util0, libxcb-shape0, libxcb-xfixes0, libxcb-xinerama0, libxcb-randr0, libxcb-render0, libxcb-shm0, libxcb-sync1, libxkbcommon0, libxkbcommon-x11-0, libsm6, libice6, zlib1g, libxext6, fonts-dejavu-core'
  old=['larsana-full']+[subprocess.check_output(['dpkg-deb','-f',str(p),'Package'],text=True).strip() for p in packages[1:]]
  control=STAGE/'DEBIAN';control.mkdir()
  (control/'control').write_text(f'''Package: larsana
@@ -114,7 +114,7 @@ Replaces: {', '.join(old)}
 Description: Complete LARSANA desktop and local web development runtimes
  Includes Apache, stable Nginx, five PHP versions, four MariaDB versions
  and phpMyAdmin for local database management.
- One amd64 package for Ubuntu 24.04, Linux Mint 22.x and Debian 13.
+ One amd64 package for Ubuntu 24.04 through 26.04 and compatible Mint/Debian.
 ''')
  guard='''#!/bin/sh
 set -eu
@@ -129,14 +129,7 @@ esac
 exit 0
 '''
  (control/'prerm').write_text(guard);(control/'prerm').chmod(0o755)
- (control/'preinst').write_text('''#!/bin/sh
-set -eu
-. /etc/os-release
-case "${UBUNTU_CODENAME:-${VERSION_CODENAME:-}}" in noble|trixie) ;; *)
- echo 'LARSANA supports Ubuntu 24.04, Mint 22.x or Debian 13 (amd64).' >&2; exit 1;;
-esac
-exit 0
-''');(control/'preinst').chmod(0o755)
+ (control/'preinst').write_text((ROOT/'packaging/preinst').read_text());(control/'preinst').chmod(0o755)
  # Rename component lintian overrides to match the single owner package.
  folder=STAGE/'usr/share/lintian/overrides'
  all_lines=[]

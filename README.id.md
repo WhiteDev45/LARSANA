@@ -4,11 +4,11 @@
 
 [English](README.md) · [Bahasa Indonesia](README.id.md)
 
-[![Unduh .deb](https://img.shields.io/badge/Download-.deb-2563eb?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.2/larsana_1.2.2_amd64.deb)
+[![Unduh .deb](https://img.shields.io/badge/Download-.deb-2563eb?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.3/larsana_1.2.3_amd64.deb)
 
-[Unduh .deb — LARSANA 1.2.2](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.2/larsana_1.2.2_amd64.deb)
+[Unduh .deb — LARSANA 1.2.3](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.3/larsana_1.2.3_amd64.deb)
 
-LARSANA 1.2.2 · amd64 · Ubuntu 24.04 / Linux Mint 22.x / Debian 13
+LARSANA 1.2.3 · amd64 · Ubuntu 24.04–26.04 / Linux Mint berbasis Ubuntu 24.04–26.04 / Debian 13+
 
 LARSANA adalah aplikasi desktop open source untuk pengembangan PHP lokal pada Ubuntu, Linux Mint, dan Debian. Terinspirasi alur kerja Laragon, LARSANA menyediakan Apache, Nginx stable, pilihan versi PHP, MariaDB, serta phpMyAdmin dalam satu installer `.deb`.
 
@@ -22,14 +22,14 @@ Makna tersebut merupakan filosofi merek yang dipilih proyek. LARSANA bertujuan m
 
 > LARSANA: Sarana tangguh dan bersih untuk web development modern di Linux.
 
-## Perbaikan 1.2.2
+## Perbaikan 1.2.3
 
-- Nginx otomatis menyajikan `.mjs`, termasuk modul dan worker PDF.js, sebagai JavaScript.
-- Aturan MIME dan include kustom tetap utuh saat upgrade tanpa pemetaan bawaan duplikat.
-- Nginx memakai master foreground yang diawasi agar reload andal dan log dapat ditulis pengguna.
-- Regresi HTTP Apache/Nginx, reload, switching PHP dan upgrade paket diuji pada noble dan trixie.
+- Installer menerima Ubuntu 24.04 sampai 26.04 dan mengenali basis Ubuntu pada Linux Mint, tanpa mengunci hanya codename noble/trixie.
+- APT tetap memvalidasi library sistem: amd64, libc6 minimal 2.39. Debian 12 dan Mint berbasis Ubuntu 22.04 belum memenuhi baseline ini.
+- Cache QML otomatis memakai direktori versi baru saat upgrade. Cache lama tidak dipakai ulang; proyek, database, pengaturan, dan cache aplikasi lain tetap utuh.
+- Semua perbaikan Nginx 1.2.2 tetap disertakan dalam satu paket.
 
-## Isi versi 1.2.2
+## Isi versi 1.2.3
 
 | Komponen | Versi yang disertakan |
 | --- | --- |
@@ -45,18 +45,18 @@ Desktop menyediakan Start All / Stop All, pemilihan runtime, pembuatan proyek, a
 
 ## Sistem yang didukung
 
-Satu installer **amd64 / x86-64** yang sama menargetkan Ubuntu 24.04 LTS, Linux Mint 22.x, dan Debian 13. Payload yang sama telah diuji pada lingkungan terisolasi noble dan trixie, termasuk HTTP/FPM, operasi database, interaksi GUI, instalasi, upgrade, dan penghapusan paket.
+Satu installer **amd64 / x86-64** menargetkan Ubuntu 24.04–26.04, Linux Mint dengan basis Ubuntu dalam rentang tersebut, dan Debian 13+. Lihat [catatan validasi 1.2.3](RELEASE-1.2.3.md) untuk target dan jenis pengujian yang benar-benar dijalankan. Penerimaan versi oleh installer tidak berarti seluruh desktop distro tersebut sudah diuji.
 
-Versi distro lain dan ARM64 belum diverifikasi. Pengujian VM desktop/reboot penuh, tray lintas desktop, serta autentikasi melalui agent Polkit nyata masih belum tercakup. Nomor versi tidak berarti pengujian tersebut sudah selesai.
+ARM64, VM desktop/reboot penuh, tray lintas desktop, dan autentikasi melalui agent Polkit nyata belum diverifikasi.
 
 ## Instalasi atau upgrade
 
-Unduh **`larsana_1.2.2_amd64.deb`** dari halaman **Releases** repository ini. ZIP/TAR source code yang dibuat otomatis oleh GitHub merupakan kode sumber; pilih `.deb` untuk memasang aplikasi.
+Unduh **`larsana_1.2.3_amd64.deb`** dari halaman **Releases** repository ini. ZIP/TAR source code yang dibuat otomatis oleh GitHub merupakan kode sumber; pilih `.deb` untuk memasang aplikasi.
 
 Tutup LARSANA sebelum upgrade, lalu jalankan dari folder unduhan:
 
 ```bash
-sudo apt install ./larsana_1.2.2_amd64.deb
+sudo apt install ./larsana_1.2.3_amd64.deb
 larsana
 ```
 

@@ -14,6 +14,16 @@ from PySide6.QtQuick import QQuickWindow
 from PySide6.QtQml import QQmlApplicationEngine
 from larsana.core import Manager
 from larsana.gui import Bridge
+from larsana import __version__
+from larsana.cache import configure_qml_cache
+os.environ['XDG_CACHE_HOME']='/tmp/larsana-cache'
+old_cache=Path('/tmp/larsana-cache/larsana/qml/1.2.2')
+old_cache.mkdir(parents=True,exist_ok=True)
+(old_cache/'Main.qmlc').write_bytes(b'corrupted previous-release cache')
+os.environ['QML_DISK_CACHE_PATH']=str(old_cache)
+cache=configure_qml_cache()
+assert cache.name==__version__ and cache!=old_cache
+assert os.environ['QML_DISK_CACHE_PATH']==str(cache)
 app=QApplication([])
 m=Manager();m.acquire()
 bridge=Bridge(m)
@@ -25,6 +35,8 @@ bridge.error.connect(errors.append)
 engine.warnings.connect(lambda items:warnings.extend([str(i.toString()) for i in items]))
 engine.load(str(Path(sys.path[0])/'larsana/qml/Main.qml'))
 assert engine.rootObjects(),'QML did not load'
+assert (old_cache/'Main.qmlc').read_bytes()==b'corrupted previous-release cache'
+print('PASS desktop upgrade uses fresh QML cache and preserves previous cache',flush=True)
 window=engine.rootObjects()[0]
 
 def settled(timeout=180):

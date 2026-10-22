@@ -211,11 +211,13 @@ class Bridge(QObject):
 
 
 def run(manager, screenshot=None):
+    from .cache import configure_qml_cache
+    configure_qml_cache()
     manager.acquire()
     manager.save()  # Remember the initial selection; package updates must not switch databases.
     app = QApplication(['larsana'])
     app.setApplicationName('LARSANA')
-    app.setApplicationVersion('1.2.2')
+    app.setApplicationVersion('1.2.3')
     app.setOrganizationName('LARSANA')
     app.setDesktopFileName('larsana')
     app.setStyle('Fusion')

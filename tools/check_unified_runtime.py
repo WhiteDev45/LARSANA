@@ -3,8 +3,8 @@
 from pathlib import Path
 import argparse,subprocess
 ROOT=Path(__file__).resolve().parents[1]
-p=argparse.ArgumentParser();p.add_argument('--target',choices=['noble','trixie'],required=True);p.add_argument('--gui',action='store_true');p.add_argument('--ldd',action='store_true');p.add_argument('--crypto',action='store_true');p.add_argument('--unit',action='store_true');p.add_argument('--phpmyadmin',action='store_true');p.add_argument('--database-access',action='store_true');p.add_argument('--laravel',action='store_true');p.add_argument('--reload-diagnostic',action='store_true');p.add_argument('--web-regression',action='store_true');args=p.parse_args()
-fs=(ROOT if args.target=='noble' else ROOT/'.build/targets/debian13')/'.build/rootfs'
+p=argparse.ArgumentParser();p.add_argument('--target',choices=['noble','trixie','resolute'],required=True);p.add_argument('--gui',action='store_true');p.add_argument('--ldd',action='store_true');p.add_argument('--crypto',action='store_true');p.add_argument('--unit',action='store_true');p.add_argument('--phpmyadmin',action='store_true');p.add_argument('--database-access',action='store_true');p.add_argument('--laravel',action='store_true');p.add_argument('--reload-diagnostic',action='store_true');p.add_argument('--web-regression',action='store_true');args=p.parse_args()
+fs=ROOT/'.build/ubuntu-tests/resolute/rootfs' if args.target=='resolute' else (ROOT if args.target=='noble' else ROOT/'.build/targets/debian13')/'.build/rootfs'
 (fs/'usr/lib/larsana').mkdir(parents=True,exist_ok=True)
 out=ROOT/'.build/unified-tests'/args.target;out.mkdir(parents=True,exist_ok=True)
 base=['bwrap','--die-with-parent','--unshare-pid','--unshare-net','--ro-bind',str(fs),'/',

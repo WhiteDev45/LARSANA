@@ -4,11 +4,11 @@
 
 [English](README.md) · [Bahasa Indonesia](README.id.md)
 
-[![Download .deb](https://img.shields.io/badge/Download-.deb-2563eb?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.2/larsana_1.2.2_amd64.deb)
+[![Download .deb](https://img.shields.io/badge/Download-.deb-2563eb?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.3/larsana_1.2.3_amd64.deb)
 
-[Download .deb — LARSANA 1.2.2](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.2/larsana_1.2.2_amd64.deb)
+[Download .deb — LARSANA 1.2.3](https://github.com/WhiteDev45/LARSANA/releases/download/v1.2.3/larsana_1.2.3_amd64.deb)
 
-LARSANA 1.2.2 · amd64 · Ubuntu 24.04 / Linux Mint 22.x / Debian 13
+LARSANA 1.2.3 · amd64 · Ubuntu 24.04–26.04 / compatible Linux Mint / Debian 13+
 
 LARSANA is an open-source desktop environment for local PHP development on Ubuntu, Linux Mint, and Debian. Inspired by Laragon's workflow, it brings Apache, stable Nginx, multiple PHP versions, MariaDB, and phpMyAdmin into one `.deb` installer.
 
@@ -22,14 +22,14 @@ These are the project's chosen brand meanings. LARSANA aims to make everyday dev
 
 > LARSANA: a robust, clean environment for modern web development on Linux.
 
-## Fixed in 1.2.2
+## Fixed in 1.2.3
 
-- Nginx serves `.mjs`, including PDF.js modules and workers, as JavaScript automatically.
-- Existing custom MIME rules and includes survive upgrades without duplicate default mappings.
-- Nginx runs with a supervised foreground master for reliable reloads and writable user logs.
-- Apache/Nginx HTTP, reload, PHP switching and package upgrade regressions tested on noble and trixie.
+- Accept Ubuntu 24.04 through 26.04 and detect Linux Mint's Ubuntu base instead of requiring only noble/trixie codenames.
+- Validate system ABI through APT dependencies; older bases below libc6 2.39 remain unsupported.
+- Automatically use a fresh version-specific QML cache after upgrades, preserving projects, databases and settings.
+- Retain all Nginx MIME and reload fixes from 1.2.2 in the single installer.
 
-## Included in version 1.2.2
+## Included in version 1.2.3
 
 | Component | Included versions |
 | --- | --- |
@@ -45,18 +45,18 @@ The desktop provides Start All / Stop All, runtime selection, project creation, 
 
 ## Supported systems
 
-The same **amd64 / x86-64** installer targets Ubuntu 24.04 LTS, Linux Mint 22.x, and Debian 13. Shared payloads were tested in isolated noble and trixie environments, including HTTP/FPM, database operations, GUI interaction, package installation, upgrade, and removal.
+The same **amd64 / x86-64** installer targets Ubuntu 24.04–26.04, Linux Mint based on those Ubuntu releases, and Debian 13+. See [1.2.3 validation notes](RELEASE-1.2.3.md) for tested targets and limitations. Installer acceptance alone does not establish desktop validation.
 
-Other distribution releases and ARM64 are unverified. Full desktop VM/reboot tests, tray behavior across desktops, and real Polkit-agent authentication remain outside the completed validation. The version number does not imply those tests have been completed.
+ARM64, full desktop VM/reboot testing, cross-desktop tray behavior and real Polkit agent authentication remain unverified.
 
 ## Install or upgrade
 
-Download **`larsana_1.2.2_amd64.deb`** from this repository's **Releases** page. GitHub's automatically generated source ZIP/TAR files are for source code; choose the `.deb` to install the application.
+Download **`larsana_1.2.3_amd64.deb`** from this repository's **Releases** page. GitHub's automatically generated source ZIP/TAR files are for source code; choose the `.deb` to install the application.
 
 Close LARSANA before upgrading, then run from the download directory:
 
 ```bash
-sudo apt install ./larsana_1.2.2_amd64.deb
+sudo apt install ./larsana_1.2.3_amd64.deb
 larsana
 ```
 
@@ -121,3 +121,7 @@ Read the [contribution guide](CONTRIBUTING.md) for development expectations. The
 The Python/Qt application uses [GPL-3.0-or-later](LICENSE). The phpMyAdmin PHP router is an explicit GPL-2.0-only exception; see [its notice](packaging/phpmyadmin-router.copyright). phpMyAdmin, runtimes, Qt, and other bundled dependencies retain their upstream licenses and notices.
 
 Binary distributions must be accompanied by the corresponding source and build/patch instructions required by those licenses. Project source and build recipes are available in this repository; pinned upstream source URLs and checksums are recorded in `runtimes/` and package metadata. Complete source bundles and validation reports are retained locally. The release installer asset is the `.deb` file.
+
+## Compatibility and upgrade cache in 1.2.3
+
+The single amd64 installer accepts Ubuntu 24.04 through 26.04, Linux Mint with an Ubuntu base in that range, and Debian 13+. APT validates the actual library dependencies, including libc6 >= 2.39. Older Debian/Mint bases remain unsupported. QML caches use a new version-specific directory automatically after upgrading; user projects, databases and settings are preserved. See [1.2.3 validation notes](RELEASE-1.2.3.md) for tested targets and limits.

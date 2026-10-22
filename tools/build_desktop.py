@@ -10,7 +10,7 @@ import subprocess
 import sys
 
 ROOT=Path(__file__).resolve().parents[1]
-VERSION='1.2.2'
+VERSION='1.2.3'
 STAGE=ROOT/'.build/stage/desktop'
 
 
@@ -80,7 +80,7 @@ main()
     shutil.move(str(doc/'larsana.1.gz'),man/'larsana.1.gz')
     (doc/'copyright').write_text('LARSANA code: Copyright 2026 LARSANA contributors.\nLicense: GPL-3.0-or-later; see LICENSE.\nQt/PySide6/Shiboken6: The Qt Company and contributors.\nSee THIRD_PARTY.md, upstream package METADATA and licenses/.\nThe GPL version 3 text is available at /usr/share/common-licenses/GPL-3.\n')
     (doc/'changelog.gz').write_bytes(gzip.compress(b'larsana (0.1.1) noble; urgency=low\n\n  * Initial local desktop build.\n\n -- LARSANA Contributors <maintainers@larsana.invalid>  Sat, 17 Oct 2026 12:00:00 +0700\n',mtime=0))
-    deps='python3 (>= 3.10), libc6 (>= 2.35), libstdc++6, libgcc-s1, libgl1, libegl1, libopengl0, libglib2.0-0, libdbus-1-3, libfontconfig1, libfreetype6, libx11-6, libx11-xcb1, libxcb1, libxcb-cursor0, libxcb-icccm4, libxcb-image0, libxcb-keysyms1, libxcb-render-util0, libxcb-shape0, libxcb-xfixes0, libxcb-xinerama0, libxcb-randr0, libxcb-render0, libxcb-shm0, libxcb-sync1, libxkbcommon0, libxkbcommon-x11-0, libsm6, libice6, zlib1g, libxext6'
+    deps='python3 (>= 3.10), libc6 (>= 2.35), libstdc++6, libgcc-s1, libgl1, libegl1, libopengl0, libglib2.0-0, libdbus-1-3, libgssapi-krb5-2, libfontconfig1, libfreetype6, libx11-6, libx11-xcb1, libxcb1, libxcb-cursor0, libxcb-icccm4, libxcb-image0, libxcb-keysyms1, libxcb-render-util0, libxcb-shape0, libxcb-xfixes0, libxcb-xinerama0, libxcb-randr0, libxcb-render0, libxcb-shm0, libxcb-sync1, libxkbcommon0, libxkbcommon-x11-0, libsm6, libice6, zlib1g, libxext6'
     write(Path('DEBIAN/control'),f'''Package: larsana
 Version: {VERSION}
 Architecture: amd64

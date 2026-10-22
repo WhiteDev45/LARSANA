@@ -1,0 +1,22 @@
+#!/bin/sh
+set -eu
+# APT validates the actual library ABI via Depends. Do not pin codenames:
+# Mint declares its own codename while UBUNTU_CODENAME identifies its base.
+. /etc/os-release
+supported=false
+case "${ID:-}" in
+ ubuntu)
+  if dpkg --compare-versions "${VERSION_ID:-0}" ge 24.04 &&
+     dpkg --compare-versions "${VERSION_ID:-0}" le 26.04; then supported=true; fi;;
+ linuxmint)
+  case "${UBUNTU_CODENAME:-}" in noble|oracular|plucky|questing|resolute) supported=true;; esac
+  # LMDE 7 uses the Debian 13 ABI baseline.
+  if [ "${DEBIAN_CODENAME:-${VERSION_CODENAME:-}}" = trixie ]; then supported=true; fi;;
+ debian)
+  if dpkg --compare-versions "${VERSION_ID:-0}" ge 13; then supported=true; fi;;
+esac
+if [ "$supported" != true ]; then
+ echo 'LARSANA requires Ubuntu 24.04–26.04, Mint with an Ubuntu 24.04–26.04 base, or Debian 13+ (amd64; libc6 >= 2.39). Older bases are unsupported.' >&2
+ exit 1
+fi
+exit 0

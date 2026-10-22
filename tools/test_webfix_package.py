@@ -8,17 +8,17 @@ import subprocess
 
 ROOT=Path(__file__).resolve().parents[1]
 p=argparse.ArgumentParser()
-p.add_argument('--target',choices=['noble','trixie'],required=True)
+p.add_argument('--target',choices=['noble','trixie','resolute'],required=True)
 p.add_argument('--package',type=Path,required=True)
-p.add_argument('--previous',type=Path,help='Previous public 1.2.1 installer for the upgrade fixture')
+p.add_argument('--previous',type=Path,help='Previous public installer for the upgrade fixture')
 args=p.parse_args()
 package=args.package.resolve()
 previous=args.previous.resolve() if args.previous else next((file for file in [ROOT/'releases/larsana_1.2.1_amd64.deb',ROOT/'.build/release-history/larsana_1.2.1_amd64.deb'] if file.exists()),None)
 assert previous is not None and previous.is_file(),'Provide the previous installer with --previous'
 version=subprocess.check_output(['dpkg-deb','-f',str(package),'Version'],text=True).strip()
-fs=ROOT/'.build/unified-install'/args.target
+fs=ROOT/'.build/ubuntu-tests/resolute/rootfs' if args.target=='resolute' else ROOT/'.build/unified-install'/args.target
 assert (fs/'usr/bin/apt-get').exists(),'Prepare isolated APT installation filesystem first'
-assert not (fs/'usr/lib/larsana').exists(),'Disposable installation must start purged'
+assert not (fs/'usr/lib/larsana/launch.py').exists(),'Disposable installation must start purged'
 base=['bwrap','--die-with-parent','--unshare-user','--uid','0','--gid','0','--unshare-pid','--unshare-net','--bind',str(fs),'/', '--ro-bind',str(ROOT),'/work','--dev','/dev','--proc','/proc','--tmpfs','/tmp','--setenv','PATH','/usr/sbin:/usr/bin:/sbin:/bin','--setenv','LC_ALL','C','--setenv','DEBIAN_FRONTEND','noninteractive','--chdir','/work']
 out=ROOT/'.build/webfix-installed'/args.target;out.mkdir(parents=True,exist_ok=True)
 user=['bwrap','--die-with-parent','--unshare-pid','--unshare-net','--ro-bind',str(fs),'/', '--ro-bind',str(ROOT),'/work','--bind',str(out),'/artifacts','--dev','/dev','--proc','/proc','--tmpfs','/tmp','--setenv','HOME','/tmp/test-home','--setenv','XDG_CONFIG_HOME','/tmp/test-config','--setenv','XDG_DATA_HOME','/tmp/test-data','--setenv','XDG_STATE_HOME','/tmp/test-state','--setenv','XDG_RUNTIME_DIR','/tmp/test-run','--setenv','QT_QUICK_BACKEND','software','--setenv','PYTHONPATH','/usr/lib/larsana/python','--chdir','/work']
@@ -46,7 +46,16 @@ subprocess.run(user+['/usr/bin/python3','tools/web_regression.py'],check=True)
 subprocess.run(user+['/usr/bin/xvfb-run','-a','/usr/bin/larsana','--screenshot','/artifacts/installed-candidate.png'],check=True,timeout=90)
 print('PASS actual candidate clean APT installation, installed Apache/Nginx HTTP regressions and GUI',flush=True)
 run(['dpkg','--remove','larsana']);preserved()
-install(previous);preserved()
+# The old public installer only supports noble/trixie. Model an OS upgrade:
+# install 1.2.2 on its supported base, then restore the real 26.04 identity.
+if args.target=='resolute':
+    old_identity=fs/'etc/os-release'
+    original_identity=old_identity.read_bytes()
+    old_identity.write_text('ID=ubuntu\nVERSION_ID="24.04"\nVERSION_CODENAME=noble\nUBUNTU_CODENAME=noble\n')
+    try:install(previous)
+    finally:old_identity.write_bytes(original_identity)
+else:install(previous)
+preserved()
 install(package);preserved()
 
 # Mount the pre-existing user configuration from the disposable test filesystem.
@@ -69,7 +78,7 @@ try:
   conn=http.client.HTTPConnection('127.0.0.1',m.settings['port']);conn.request('GET','/'+name)
   r=conn.getresponse();assert r.status==200 and r.getheader('Content-Type') in ('application/javascript','text/javascript');r.read();conn.close()
  assert extra.read_bytes()==before
- print('PASS actual 1.2.1 -> candidate APT upgrade; existing MIME workaround preserved, no duplicates, real js/mjs/worker HTTP')
+ print('PASS actual previous -> candidate APT upgrade; existing MIME workaround preserved, no duplicates, real js/mjs/worker HTTP')
 finally:m.close()
 '''
 subprocess.run(user+['--bind',str(home/'.config/larsana'),'/tmp/test-config/larsana','/usr/bin/python3','-c',upgrade_code],check=True)

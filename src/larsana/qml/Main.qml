@@ -150,7 +150,7 @@ ApplicationWindow {
             Layout.topMargin: 12
             Text { text: notice; color: muted; font.pixelSize: 10; Layout.fillWidth: true; elide: Text.ElideRight }
             BusyIndicator { running: backend.busy; visible: running; Layout.preferredWidth: 16; Layout.preferredHeight: 16 }
-            Text { text: "LINUX EDITION  /  1.2.2"; color: muted; font.pixelSize: 9; font.letterSpacing: 1 }
+            Text { text: "LINUX EDITION  /  1.2.3"; color: muted; font.pixelSize: 9; font.letterSpacing: 1 }
         }
     }
     Menu {
@@ -276,7 +276,7 @@ ApplicationWindow {
         Label { width: parent.width; wrapMode: Text.WordWrap; text: "The complete LARSANA package includes all runtimes.\n\nPHP: 8.1 (legacy), 8.2, 8.3, 8.4, 8.5\nNginx: stable only\nMariaDB: stable / GA only; separate data per series\n\nAll runtimes are included in the single LARSANA installer.\n\nRuntime location:\n" + snapshotData.installed.php.map(function(x){return x.root}).join("\n") }
     }
     Dialog {
-        id: aboutDialog; anchors.centerIn: parent; width: 440; title: "LARSANA 1.2.2"; modal: true; standardButtons: Dialog.Ok
+        id: aboutDialog; anchors.centerIn: parent; width: 440; title: "LARSANA 1.2.3"; modal: true; standardButtons: Dialog.Ok
         Label { width: parent.width; wrapMode: Text.WordWrap; text: "Local development, on Linux.\n\nAn independent desktop environment inspired by Laragon workflows.\n\nLARSANA source: GPL-3.0-or-later.\nRuntime components retain their upstream licenses." }
     }
 }
